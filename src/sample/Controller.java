@@ -125,7 +125,7 @@ public class Controller {
 
     @FXML
     public void newGuest() {
-        Guest g = new Guest("Smith","John","860-539-8642","jsmith@gmail.com", "Nothing Of Note");
+        Guest g = new Guest();
         guests.add(g);
         guestSelect.setItems(guests);
     }
@@ -148,8 +148,8 @@ public class Controller {
     @FXML
     public void updateGuest() {
         saveCurrentGuestData(selectedGuest);
-        updateGuestTextField(selectedGuest);
         guestSelect.setItems(guests);
+        updateGuestTextField(selectedGuest);
     }
 
     @FXML

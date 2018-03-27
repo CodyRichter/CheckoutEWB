@@ -281,6 +281,7 @@ public class Guest {
     }
 
     public String toString() {
+        if (lastName == null) return ""+number;
         return ""+number+" "+lastName;
     }
 
