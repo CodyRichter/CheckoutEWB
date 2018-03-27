@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 public class Controller {
@@ -24,13 +26,25 @@ public class Controller {
     //
 
     @FXML
-    Button saveData;
+    MenuItem saveData;
 
     @FXML
-    Button loadData;
+    MenuItem loadData;
+
+    @FXML
+    MenuItem about;
+
+    @FXML
+    MenuItem documentation;
 
     @FXML
     Button addItem;
+
+    @FXML
+    TextField removeItemNum;
+
+    @FXML
+    TextField removeGuestNum;
 
     @FXML
     Button addGuest;
@@ -87,7 +101,13 @@ public class Controller {
     TextField glasses;
 
     @FXML
+    Label totalDue;
+
+    @FXML
     TextField guestDonation;
+
+    @FXML
+    TextArea guestItemList;
 
     @FXML
     ComboBox<Guest> guestSelect;
@@ -128,41 +148,122 @@ public class Controller {
         Guest g = new Guest();
         guests.add(g);
         guestSelect.setItems(guests);
-        ownerSelect.setItems(guests);
     }
 
     @FXML
     public void newItem() {
-        // TODO
+        Item i = new Item();
+        items.add(i);
+        itemSelect.setItems(items);
     }
 
     @FXML
     public void removeGuest() {
-        // TODO
+        if (removeGuestNum.getText() == null || removeGuestNum.getText() == "") return;
+        Guest g = null;
+        try {
+            int guestNumber = Integer.parseInt(removeGuestNum.getText());
+            g = Guest.getGuestFromID(""+guestNumber);
+        } catch (Exception ignored) {}
+        if (g == null) return;
+        removeGuestNum.clear();
+        guests.remove(g);
+        if (selectedGuest == g) selectedGuest = null;
+            updateGuest();
+            guestSelect.setItems(guests);
+
     }
 
     public void removeItem() {
-        // TODO
+        if (removeItemNum.getText() == null || removeItemNum.getText() == "") return;
+        Item i = null;
+        try {
+            int itemNumber = Integer.parseInt(removeItemNum.getText());
+            i = Item.getItemFromID(""+itemNumber);
+        } catch (Exception ignored) {}
+        if (i == null) return;
+        items.remove(i);
+        removeItemNum.clear();
+        if (selectedItem == i) selectedItem = null;
+        updateItem();
+        itemSelect.setItems(items);
     }
 
     @FXML
     public void updateGuest() {
+        if (selectedGuest == null) {clearGuestData(); return;}
         saveCurrentGuestData(selectedGuest);
         guestSelect.setItems(guests);
-        ownerSelect.setItems(guests);
         updateGuestTextField(selectedGuest);
+    }
+
+    public void clearGuestData() {
+        lastName.setText("");
+        firstName.setText("");
+        phoneNumber.setText("");
+        email.setText("");
+        tShirt.setText("");
+        glasses.setText("");
+        guestDonation.setText("");
+        changeGiven.setText("");
+        entryDonation.setText("");
+        guestNotes.setText("");
+        amountPaid.setText("");
+        orderComplete.setSelected(false);
+        auctionPaidByCheck.setSelected(false);
+        entryPaidByCheck.setSelected(false);
+        guestItemList.setText("");
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+        totalDue.setText("[X]");
+    }
+
+    public void clearItemData() {
+        itemName.setText("");
+        itemPrice.setText("");
+        itemOwner.setText("");
+        itemNotes.setText("");
     }
 
     @FXML
     public void updateItem() {
-        selectedItem.setOwner(guestSelect.getValue());
-        selectedItem.setName(itemName.getText());
-        selectedItem.setNotes(itemNotes.getText());
+        if (selectedItem==null) {clearItemData(); return;}
+        saveCurrentItemData(selectedItem);
+        itemSelect.setItems(items);
+        updateItemTextField(selectedItem);
+    }
+
+    @FXML
+    public void saveCurrentItemData(Item i) {
+        i.setName(itemName.getText());
+        i.setNotes(itemNotes.getText());
 
         try {
-            double d = Double.parseDouble(guestDonation.getText());
-            selectedItem.setPrice(d);
+            int ownerNumber = Integer.parseInt(itemOwner.getText());
+            Guest g = Guest.getGuestFromID(""+ownerNumber);
+            i.setOwner(g);
         } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(itemPrice.getText());
+            i.setPrice(d);
+        } catch (Exception ignored) {}
+    }
+
+    @FXML
+    public void selectItemFromList() {
+        Item i = itemSelect.getValue();
+        selectedItem = i;
+        updateItemTextField(i);
+    }
+
+    @FXML
+    public void updateItemTextField(Item i) {
+        if (i == null) {clearItemData(); return;}
+        itemName.setText(i.getName());
+        itemPrice.setText(""+i.getPrice());
+        if (selectedItem.getOwner() != null) itemOwner.setText(""+i.getOwner().getNumber());
+        else itemOwner.setText("");
+        itemNotes.setText(i.getNotes());
     }
 
 
@@ -222,7 +323,7 @@ public class Controller {
 
     @FXML
     private void updateGuestTextField(Guest g) {
-        if (g == null) return;
+        if (g == null) {clearGuestData(); return;}
         lastName.setText(g.getLastName());
         firstName.setText(g.getFirstName());
         phoneNumber.setText(g.getPhoneNumber());
@@ -237,6 +338,22 @@ public class Controller {
         orderComplete.setSelected(g.getOrderComplete());
         auctionPaidByCheck.setSelected(!g.isPaidAuctionItemsCash());
         entryPaidByCheck.setSelected(!g.isPaidEntryDonationCash());
+
+        updateGuestItems(g);
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+        totalDue.setText(""+g.checkout());
+    }
+
+    private void updateGuestItems(Guest g) {
+        String owned = "";
+        g.getItems().clear();
+        for (Item i : items) {
+            if (i.getOwner() == g) {
+            owned += "[$"+ i.getPrice()+"]  #["+ i.getNumber()+"]    "+i.getName() + "\n";
+            g.getItems().add(i);
+            }
+        }
+        guestItemList.setText(owned);
     }
 
 }

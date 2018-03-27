@@ -17,16 +17,16 @@ public class Guest {
 
     //Entry Donation Info
     private double entryDonation;
-    private boolean paidEntryDonationCash;
+    private boolean paidEntryDonationCash = true;
 
     //Add-On Item Info
-    private int numberShirts;
-    private int numberCups;
+    private int numberShirts = 0;
+    private int numberCups = 0;
     private double donation;
 
     //Auction Items
-    private ArrayList<Item> items;
-    private boolean paidAuctionItemsCash;
+    private ArrayList<Item> items = new ArrayList<Item>();
+    private boolean paidAuctionItemsCash = true;
     private double amountPaid;
     private double changeGiven; //Amount of change given back to guest
 
@@ -183,18 +183,22 @@ public class Guest {
     }
 
     public String getLastName() {
+        if (lastName==null) return "";
         return lastName;
     }
 
     public String getFirstName() {
+        if (firstName==null) return "";
         return firstName;
     }
 
     public String getPhoneNumber() {
+        if (phoneNumber==null) return "";
         return phoneNumber;
     }
 
     public String getEmail() {
+        if (email==null) return "";
         return email;
     }
 
@@ -231,6 +235,7 @@ public class Guest {
     }
 
     public String getNotes() {
+        if (notes==null) return "";
         return notes;
     }
 
@@ -252,17 +257,16 @@ public class Guest {
         for (int i = 0; i < numberShirts; i++) {
             sum += 10;
         }
-        for (int i = 0; i < numberShirts; i++) {
-            if (numberShirts - i % 2 == 0) {
-                sum += 12; //Price Of Two For 1 Cups
-                i++;
-            } else {
-                sum += 7; //Price of Single Cup
-            }
-        }
+
+
+            sum += (numberCups/2)*12;
+            if (numberCups%2 != 0) sum +=7;
+
         for (Item i : items) {
             sum += i.getPrice();
         }
+
+        sum += donation;
 
         return sum;
     }
@@ -281,8 +285,9 @@ public class Guest {
     }
 
     public String toString() {
-        if (lastName == null) return ""+number;
-        return ""+number+" "+lastName;
+        if ((lastName == null || lastName.equals("")) && (firstName == null || firstName.equals(""))) return ""+number;
+        if (firstName == null || firstName.equals("")) return ""+number+" "+lastName;
+        return ""+number+" "+lastName + ", " + firstName;
     }
 
 }

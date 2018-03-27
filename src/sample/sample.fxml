@@ -3,9 +3,13 @@
 <?language Java?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
@@ -18,28 +22,46 @@
     <top>
         <ToolBar prefHeight="40.0" prefWidth="217.0" BorderPane.alignment="CENTER">
             <items>
-            <Button fx:id="saveData" mnemonicParsing="false" onAction="#saveData" text="Save Data" />
-            <Button fx:id="loadData" mnemonicParsing="false" onAction="#loadData" text="Load Data" />
+            <MenuBar prefHeight="25.0" prefWidth="103.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="saveData" mnemonicParsing="false" text="Save Data" />
+                        <MenuItem fx:id="loadData" mnemonicParsing="false" text="Load Data" />
+                        <MenuItem mnemonicParsing="false" text="Save and Exit" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem fx:id="about" mnemonicParsing="false" text="About" />
+                        <MenuItem fx:id="documentation" mnemonicParsing="false" text="Documentation" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
                 <Button fx:id="addItem" mnemonicParsing="false" onAction="#newItem" text="New Item" />
                 <Button fx:id="addGuest" mnemonicParsing="false" onAction="#newGuest" text="New Guest" />
-            <Button fx:id="removeGuest" mnemonicParsing="false" onAction="#removeGuest" text="Remove Guest">
+                <Button fx:id="removeItem" mnemonicParsing="false" onAction="#removeItem" text="Remove Item">
+                    <graphic>
+                        <TextField fx:id="removeItemNum" prefHeight="25.0" prefWidth="37.0" />
+                    </graphic></Button>
+            <ButtonBar />
+            <ButtonBar />
+            <Button fx:id="removeGuest" layoutX="267.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeGuest" text="Remove Guest">
                <graphic>
-                  <TextField prefHeight="25.0" prefWidth="37.0" />
-               </graphic></Button>
-            <Button fx:id="removeItem" mnemonicParsing="false" onAction="#removeItem" text="Remove Item">
-               <graphic>
-                  <TextField prefHeight="25.0" prefWidth="37.0" />
-               </graphic></Button>
+                  <TextField fx:id="removeGuestNum" prefHeight="25.0" prefWidth="37.0" />
+               </graphic>
+            </Button>
             </items>
         </ToolBar>
     </top>
    <center>
-        <SplitPane dividerPositions="0.5267558528428093" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="317.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="269.0">
                     <children>
                         <Accordion layoutY="7.0" />
-                        <ComboBox fx:id="itemSelect" layoutX="90.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
+                        <ComboBox fx:id="itemSelect" layoutX="90.0" layoutY="10.0" onAction="#selectItemFromList" prefHeight="25.0" prefWidth="99.0" />
                         <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="158.0" text="Item Number:" />
                   <Label layoutX="14.0" layoutY="42.0" prefHeight="17.0" prefWidth="73.0" text="Item Name:" />
                   <TextField fx:id="itemName" layoutX="87.0" layoutY="38.0" />
@@ -48,11 +70,11 @@
                   <Button fx:id="updateItem" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#updateItem" text="Update Item Profile" />
                   <TextArea fx:id="itemNotes" layoutX="251.0" layoutY="35.0" prefHeight="154.0" prefWidth="200.0" text="" />
                   <Label layoutX="251.0" layoutY="14.0" prefHeight="17.0" prefWidth="158.0" text="Notes:" />
-                  <Label layoutX="29.0" layoutY="168.0" prefHeight="17.0" prefWidth="44.0" text="Owner:" />
-                  <ComboBox fx:id="ownerSelect" layoutX="85.0" layoutY="163.0" prefHeight="25.0" prefWidth="142.0" />
+                  <Label layoutX="32.0" layoutY="104.0" prefHeight="17.0" prefWidth="55.0" text="Owner #:" />
+                  <TextField fx:id="itemOwner" layoutX="87.0" layoutY="100.0" prefHeight="25.0" prefWidth="43.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="539.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="458.0">
                     <children>
                         <Label layoutX="13.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="First Name:" />
                         <Label layoutX="10.0" layoutY="75.0" prefHeight="17.0" prefWidth="73.0" text="Last Name:" />
@@ -69,7 +91,7 @@
                         <Label layoutX="145.0" layoutY="200.0" prefHeight="17.0" prefWidth="62.0" text="# Glasses:" />
                         <TextField fx:id="glasses" layoutX="199.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
                         <Label layoutX="17.0" layoutY="230.0" prefHeight="17.0" prefWidth="84.0" text="Auction Items:" />
-                        <Label layoutX="18.0" layoutY="338.0" prefHeight="17.0" prefWidth="65.0" text="Total Due:" />
+                        <Label layoutX="18.0" layoutY="338.0" prefHeight="17.0" prefWidth="65.0" text="Total Due:$" />
                         <Label layoutX="244.0" layoutY="200.0" prefHeight="17.0" prefWidth="70.0" text="Donation: $" />
                         <TextField fx:id="guestDonation" layoutX="309.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
                   <TextField fx:id="changeGiven" layoutX="215.0" layoutY="364.0" prefHeight="25.0" prefWidth="37.0" />
@@ -84,6 +106,8 @@
                   <CheckBox fx:id="orderComplete" layoutX="335.0" layoutY="330.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Order Complete" />
                   <RadioButton fx:id="auctionPaidByCheck" layoutX="12.0" layoutY="360.0" mnemonicParsing="false" text="Paid By Check" />
                   <RadioButton fx:id="entryPaidByCheck" layoutX="151.0" layoutY="170.0" mnemonicParsing="false" text="Paid By Check" />
+                  <Label fx:id="totalDue" layoutX="82.0" layoutY="338.0" prefHeight="17.0" prefWidth="46.0" text="" />
+                  <TextArea fx:id="guestItemList" editable="false" layoutX="18.0" layoutY="249.0" prefHeight="83.0" prefWidth="237.0" text="" />
                     </children>
                 </AnchorPane>
             </items>

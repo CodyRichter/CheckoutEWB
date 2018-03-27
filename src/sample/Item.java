@@ -44,14 +44,33 @@ public class Item {
     }
 
     public String getName() {
+        if (name == null) return "";
         return name;
+    }
+
+    public static Item getItemFromID(String ID) {
+        for(Item i:Controller.items) {
+            if((""+i.getNumber()).equals(ID)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     public double getPrice() {
         return price;
     }
 
+    public int getNumber() {return number;}
+
     public Guest getOwner() {return owner;}
 
-    public String getNotes() {return notes;}
+    public String getNotes() {
+        if (notes==null) return "";
+        return notes;}
+
+    public String toString() {
+        if (name == null || name.equals("")) return ""+number;
+       return ""+number+" "+name;
+    }
 }
