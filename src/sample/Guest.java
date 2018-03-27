@@ -247,8 +247,8 @@ public class Guest {
      *
      * @return Sum To Pay
      */
-    public int checkout() {
-        int sum = 0;
+    public double checkout() {
+        double sum = 0;
         for (int i = 0; i < numberShirts; i++) {
             sum += 10;
         }
@@ -261,7 +261,7 @@ public class Guest {
             }
         }
         for (Item i : items) {
-            //TODO
+            sum += i.getPrice();
         }
 
         return sum;

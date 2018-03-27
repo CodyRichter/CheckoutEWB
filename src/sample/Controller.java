@@ -5,9 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class Controller {
 
@@ -63,6 +60,9 @@ public class Controller {
 
     @FXML
     TextField itemOwner;
+
+    @FXML
+    ComboBox<Guest> ownerSelect;
 
     //
     // Guests
@@ -128,6 +128,7 @@ public class Controller {
         Guest g = new Guest();
         guests.add(g);
         guestSelect.setItems(guests);
+        ownerSelect.setItems(guests);
     }
 
     @FXML
@@ -144,20 +145,24 @@ public class Controller {
         // TODO
     }
 
-
     @FXML
     public void updateGuest() {
         saveCurrentGuestData(selectedGuest);
         guestSelect.setItems(guests);
+        ownerSelect.setItems(guests);
         updateGuestTextField(selectedGuest);
     }
 
     @FXML
     public void updateItem() {
-        itemName.setText("Item Name");
-        itemPrice.setText("Item Price");
-        itemNotes.setText("Item Notes");
-        itemOwner.setText("Item Owner");
+        selectedItem.setOwner(guestSelect.getValue());
+        selectedItem.setName(itemName.getText());
+        selectedItem.setNotes(itemNotes.getText());
+
+        try {
+            double d = Double.parseDouble(guestDonation.getText());
+            selectedItem.setPrice(d);
+        } catch (Exception ignored) {}
     }
 
 

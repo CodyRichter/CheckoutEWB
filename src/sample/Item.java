@@ -1,7 +1,5 @@
 package sample;
 
-import java.util.ArrayList;
-
 public class Item {
 
     private static int totalItems = 0; //Total Number Of Guests Attending
@@ -11,7 +9,11 @@ public class Item {
 
     //Information
     private String name;
-    private int price;
+    private double price;
+    private String notes;
+
+    private Guest owner;
+
 
     public Item() {
         //Set Up Current Guest Number
@@ -25,7 +27,7 @@ public class Item {
         this.price = price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         if (price > 0) this.price = price;
     }
 
@@ -33,14 +35,23 @@ public class Item {
         this.name = name;
     }
 
+    public void setOwner(Guest owner) {
+        this.owner = owner;
+    }
 
-
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public String getName() {
         return name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
+
+    public Guest getOwner() {return owner;}
+
+    public String getNotes() {return notes;}
 }
