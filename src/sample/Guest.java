@@ -16,16 +16,21 @@ public class Guest {
     private String notes;
 
     //Entry Donation Info
-    private int entryDonation;
+    private double entryDonation;
     private boolean paidEntryDonationCash;
 
     //Add-On Item Info
     private int numberShirts;
     private int numberCups;
+    private double donation;
 
     //Auction Items
     private ArrayList<Item> items;
     private boolean paidAuctionItemsCash;
+    private double amountPaid;
+    private double changeGiven; //Amount of change given back to guest
+
+    private boolean orderComplete; //Whether everything with this guest has been completed
 
 
     public Guest() {
@@ -34,8 +39,9 @@ public class Guest {
         totalGuests++;
     }
 
-    public Guest(String lastName, String firstName, String phoneNumber, String email, String notes){
-        super();
+    public Guest(String lastName, String firstName, String phoneNumber, String email, String notes) {
+        number = totalGuests;
+        totalGuests++;
 
         this.lastName = lastName;
         this.firstName = firstName;
@@ -63,12 +69,17 @@ public class Guest {
         this.phoneNumber = phoneNumber;
     }
 
+    public void setDonation(double donation) {
+        this.donation = donation;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
      * Sets number of shirts guest will purchase
+     *
      * @param numberShirts amount being purchased
      */
     public void setNumberShirts(int numberShirts) {
@@ -78,6 +89,7 @@ public class Guest {
 
     /**
      * Sets number of cups guest will purchase
+     *
      * @param numberCups amount being purchased
      */
     public void setNumberCups(int numberCups) {
@@ -87,15 +99,17 @@ public class Guest {
 
     /**
      * Sets amount of money guest has paid to enter event
+     *
      * @param amount Amount paid
      */
-    public void setEntryDonation(int amount) {
+    public void setEntryDonation(double amount) {
         if (amount < 0) entryDonation = 0;
         entryDonation = amount;
     }
 
     /**
      * Sets whether guest has paid for entry donation with cash or with check.
+     *
      * @param paidCash Whether Guest has paid cash for entry
      */
     public void setPaidEntryDonationCash(boolean paidCash) {
@@ -104,6 +118,7 @@ public class Guest {
 
     /**
      * Sets whether guest has paid for auction items with cash or with check.
+     *
      * @param paidCash Whether Guest has paid cash for auction items
      */
     public void setPaidAuctionItemsCash(boolean paidCash) {
@@ -112,10 +127,19 @@ public class Guest {
 
     /**
      * Adds an item to the list of items owned by guest
+     *
      * @param item
      */
     public void addItem(Item item) {
         items.add(item);
+    }
+
+    /**
+     * Sets amount of money guest has paid for auction items
+     * @param amountPaid Amount guest has paid
+     */
+    public void setAmountPaid(double amountPaid) {
+        this.amountPaid = amountPaid;
     }
 
     public void removeItem(Item item) {
@@ -123,13 +147,29 @@ public class Guest {
     }
 
 
-
     /**
      * Sets notes about specific guest
+     *
      * @param notes Additional notes to make
      */
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    /**
+     * Sets how much change is given back to this guest
+     * @param changeGiven Amount
+     */
+    public void setChangeGiven(double changeGiven) {
+        this.changeGiven = changeGiven;
+    }
+
+    /**
+     * Sets whether everything with this guest's order is complete
+     * @param orderComplete Order completed
+     */
+    public void setOrderComplete(boolean orderComplete) {
+        this.orderComplete = orderComplete;
     }
 
     //
@@ -158,7 +198,11 @@ public class Guest {
         return email;
     }
 
-    public int getEntryDonation() {
+    public double getDonation() {
+        return donation;
+    }
+
+    public double getEntryDonation() {
         return entryDonation;
     }
 
@@ -182,12 +226,25 @@ public class Guest {
         return paidAuctionItemsCash;
     }
 
+    public double getChangeGiven() {
+        return changeGiven;
+    }
+
     public String getNotes() {
         return notes;
     }
 
+    public double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public boolean getOrderComplete() {
+        return orderComplete;
+    }
+
     /**
      * Sums up all items in inventory
+     *
      * @return Sum To Pay
      */
     public int checkout() {
@@ -196,17 +253,35 @@ public class Guest {
             sum += 10;
         }
         for (int i = 0; i < numberShirts; i++) {
-            if (numberShirts-i % 2 == 0) {
+            if (numberShirts - i % 2 == 0) {
                 sum += 12; //Price Of Two For 1 Cups
                 i++;
             } else {
                 sum += 7; //Price of Single Cup
             }
         }
-        for (Item i:items) {
-
+        for (Item i : items) {
+            //TODO
         }
 
         return sum;
     }
+
+    public String getGuestID() {
+        return ""+number;
+    }
+
+    public static Guest getGuestFromID(String ID) {
+        for(Guest g:Controller.guests) {
+            if(g.getGuestID().equals(ID)) {
+                return g;
+            }
+        }
+        return null;
+    }
+
+    public String toString() {
+        return ""+number+" "+lastName;
+    }
+
 }

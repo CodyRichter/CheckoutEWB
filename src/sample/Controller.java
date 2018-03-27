@@ -1,14 +1,24 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
+
 public class Controller {
 
-    public Controller() {
+    public static ObservableList<Guest> guests = FXCollections.observableArrayList();
+    public static ObservableList<Item> items = FXCollections.observableArrayList();
 
+    public Guest selectedGuest;
+    public Item selectedItem;
+
+    public Controller() {
     }
+
+
 
     //
     // Menu Bar
@@ -44,7 +54,7 @@ public class Controller {
     TextField itemPrice;
 
     @FXML
-    ChoiceBox itemSelect;
+    ComboBox<Item> itemSelect;
 
     @FXML
     TextArea itemNotes;
@@ -78,7 +88,7 @@ public class Controller {
     TextField guestDonation;
 
     @FXML
-    ChoiceBox<Guest> guestSelect;
+    ComboBox<Guest> guestSelect;
 
     @FXML
     TextField changeGiven;
@@ -102,21 +112,41 @@ public class Controller {
     RadioButton entryPaidByCheck;
 
     @FXML
+    public void saveData() {
+        // TODO
+    }
+
+    @FXML
+    public void loadData() {
+        // TODO
+    }
+
+    @FXML
+    public void newGuest() {
+        Guest g = new Guest("Smith","John","860-539-8642","jsmith@gmail.com", "Nothing Of Note");
+        guests.add(g);
+        guestSelect.setItems(guests);
+    }
+
+    @FXML
+    public void newItem() {
+        // TODO
+    }
+
+    @FXML
+    public void removeGuest() {
+        // TODO
+    }
+
+    public void removeItem() {
+        // TODO
+    }
+
+
+    @FXML
     public void updateGuest() {
-        lastName.setText("Last Name");
-        phoneNumber.setText("Phone #");
-        firstName.setText("First Name");
-        email.setText("Email");
-        tShirt.setText("Shirt");
-        glasses.setText("glasses");
-        guestDonation.setText("Donation");
-        changeGiven.setText("Change");
-        entryDonation.setText("Entry Donation");
-        guestNotes.setText("Guest Notes");
-        amountPaid.setText("Amount paid");
-        orderComplete.setSelected(true);
-        auctionPaidByCheck.setSelected(true);
-        entryPaidByCheck.setSelected(true);
+        saveCurrentGuestData(selectedGuest);
+        updateGuestTextField(selectedGuest);
     }
 
     @FXML
@@ -128,5 +158,77 @@ public class Controller {
     }
 
 
+    @FXML
+    public void selectGuestFromList() {
+        Guest g = guestSelect.getValue();
+        selectedGuest = g;
+        updateGuestTextField(g);
+    }
+
+    @FXML
+    private void saveCurrentGuestData(Guest g) {
+        //Direct String Inputs
+        g.setLastName(lastName.getText());
+        g.setFirstName(firstName.getText());
+        g.setPhoneNumber(phoneNumber.getText());
+        g.setEmail(email.getText());
+        g.setNotes(guestNotes.getText());
+
+        //Numerial Inputs
+        try {
+            int i = Integer.parseInt(tShirt.getText());
+            g.setNumberShirts(i);
+        } catch (Exception ignored) {}
+
+        try {
+            int i = Integer.parseInt(glasses.getText());
+            g.setNumberCups(i);
+        } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(guestDonation.getText());
+            g.setDonation(d);
+        } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(changeGiven.getText());
+            g.setChangeGiven(d);
+        } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(entryDonation.getText());
+            g.setEntryDonation(d);
+        } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(amountPaid.getText());
+            g.setAmountPaid(d);
+        } catch (Exception ignored) {}
+
+
+        //Boolean Inputs
+        g.setOrderComplete(orderComplete.isSelected());
+        g.setPaidAuctionItemsCash(!auctionPaidByCheck.isSelected());
+        g.setPaidEntryDonationCash(!entryPaidByCheck.isSelected());
+    }
+
+    @FXML
+    private void updateGuestTextField(Guest g) {
+        if (g == null) return;
+        lastName.setText(g.getLastName());
+        firstName.setText(g.getFirstName());
+        phoneNumber.setText(g.getPhoneNumber());
+        email.setText(g.getEmail());
+        tShirt.setText(""+g.getNumberShirts());
+        glasses.setText(""+g.getNumberCups());
+        guestDonation.setText(""+g.getDonation());
+        changeGiven.setText(""+g.getChangeGiven());
+        entryDonation.setText(""+g.getEntryDonation());
+        guestNotes.setText(g.getNotes());
+        amountPaid.setText(""+g.getAmountPaid());
+        orderComplete.setSelected(g.getOrderComplete());
+        auctionPaidByCheck.setSelected(!g.isPaidAuctionItemsCash());
+        entryPaidByCheck.setSelected(!g.isPaidEntryDonationCash());
+    }
 
 }

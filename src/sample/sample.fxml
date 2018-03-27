@@ -14,19 +14,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.control.ComboBox?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
         <ToolBar prefHeight="40.0" prefWidth="217.0" BorderPane.alignment="CENTER">
             <items>
-            <Button fx:id="saveData" mnemonicParsing="false" text="Save Data" />
-            <Button fx:id="loadData" mnemonicParsing="false" text="Load Data" />
-                <Button fx:id="addItem" mnemonicParsing="false" text="New Item" />
-                <Button fx:id="addGuest" mnemonicParsing="false" text="New Guest" />
-            <Button fx:id="removeGuest" mnemonicParsing="false" text="Remove Guest">
+            <Button fx:id="saveData" mnemonicParsing="false" onAction="#saveData" text="Save Data" />
+            <Button fx:id="loadData" mnemonicParsing="false" onAction="#loadData" text="Load Data" />
+                <Button fx:id="addItem" mnemonicParsing="false" onAction="#newItem" text="New Item" />
+                <Button fx:id="addGuest" mnemonicParsing="false" onAction="#newGuest" text="New Guest" />
+            <Button fx:id="removeGuest" mnemonicParsing="false" onAction="#removeGuest" text="Remove Guest">
                <graphic>
                   <TextField prefHeight="25.0" prefWidth="37.0" />
                </graphic></Button>
-            <Button fx:id="removeItem" mnemonicParsing="false" text="Remove Item">
+            <Button fx:id="removeItem" mnemonicParsing="false" onAction="#removeItem" text="Remove Item">
                <graphic>
                   <TextField prefHeight="25.0" prefWidth="37.0" />
                </graphic></Button>
@@ -34,12 +35,12 @@
         </ToolBar>
     </top>
    <center>
-        <SplitPane dividerPositions="0.32608695652173914" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.20066889632107024" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="317.0">
                     <children>
                         <Accordion layoutY="7.0" />
-                        <ChoiceBox fx:id="itemSelect" layoutX="90.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
+                        <ComboBox fx:id="itemSelect" layoutX="90.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
                         <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="158.0" text="Item Number:" />
                   <Label layoutX="14.0" layoutY="42.0" prefHeight="17.0" prefWidth="73.0" text="Item Name:" />
                   <TextField fx:id="itemName" layoutX="87.0" layoutY="38.0" />
@@ -52,17 +53,17 @@
                   <TextField fx:id="itemOwner" layoutX="73.0" layoutY="164.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="253.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="539.0">
                     <children>
                         <Label layoutX="13.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="First Name:" />
                         <Label layoutX="10.0" layoutY="75.0" prefHeight="17.0" prefWidth="73.0" text="Last Name:" />
-                        <TextField fx:id="lastName" layoutX="75.0" layoutY="71.0"/>
+                        <TextField fx:id="lastName" layoutX="75.0" layoutY="71.0" />
                         <Label layoutX="25.0" layoutY="104.0" prefHeight="17.0" prefWidth="51.0" text="Phone #:" />
                         <TextField fx:id="phoneNumber" layoutX="75.0" layoutY="100.0" />
                         <TextField fx:id="firstName" layoutX="75.0" layoutY="41.0" />
                         <Button layoutX="328.0" layoutY="356.0" mnemonicParsing="false" onAction="#updateGuest" text="Update Guest Profile" />
                         <Label layoutX="39.0" layoutY="135.0" prefHeight="17.0" prefWidth="37.0" text="Email:" />
-                        <TextField fx:id="email" layoutX="75.0" layoutY="131.0"/>
+                        <TextField fx:id="email" layoutX="75.0" layoutY="131.0" />
                         <Label layoutX="12.0" layoutY="170.0" prefHeight="17.0" prefWidth="92.0" text="Entry Donation:" />
                         <Label layoutX="40.0" layoutY="200.0" prefHeight="17.0" prefWidth="64.0" text="# T-Shirts:" />
                         <TextField fx:id="tShirt" layoutX="99.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
@@ -77,7 +78,7 @@
                   <TextField fx:id="entryDonation" layoutX="99.0" layoutY="166.0" prefHeight="25.0" prefWidth="37.0" />
                   <TextArea fx:id="guestNotes" layoutX="255.0" layoutY="32.0" prefHeight="154.0" prefWidth="200.0" text="" />
                   <Label layoutX="255.0" layoutY="14.0" prefHeight="17.0" prefWidth="73.0" text="Notes:" />
-                        <ChoiceBox fx:id="guestSelect" layoutX="106.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
+                        <ComboBox fx:id="guestSelect" layoutX="99.0" layoutY="10.0" onAction="#selectGuestFromList" prefHeight="25.0" prefWidth="142.0" />
                         <Label layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="89.0" text="Guest Number:" />
                   <Label layoutX="135.0" layoutY="338.0" prefHeight="17.0" prefWidth="83.0" text="Amount Paid:" />
                   <TextField fx:id="amountPaid" layoutX="215.0" layoutY="334.0" prefHeight="25.0" prefWidth="37.0" />
