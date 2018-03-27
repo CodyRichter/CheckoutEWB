@@ -1,11 +1,13 @@
 package sample;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.FileNotFoundException;
+import java.net.URI;
 
 
 public class Controller {
@@ -36,6 +38,9 @@ public class Controller {
 
     @FXML
     MenuItem documentation;
+
+    @FXML
+    MenuItem saveAndExit;
 
     @FXML
     Button addItem;
@@ -139,8 +144,23 @@ public class Controller {
     }
 
     @FXML
-    public void loadData() {
-        // TODO
+    public void loadData() throws FileNotFoundException{
+        DataLoader.loadData();
+        guestSelect.setItems(guests);
+        itemSelect.setItems(items);
+        updateItem();
+        updateGuest();
+    }
+
+    @FXML
+    public void loadDocumentation() throws Exception{ //Loads Github Page with Documentation
+        java.awt.Desktop.getDesktop().browse(new URI("https://github.com/Senarii/CheckoutEWB/blob/master/readme.md"));
+    }
+
+    @FXML
+    public void saveAndExit() {
+        saveData();
+        System.exit(0);
     }
 
     @FXML

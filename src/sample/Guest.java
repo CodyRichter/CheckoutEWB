@@ -39,6 +39,13 @@ public class Guest {
         totalGuests++;
     }
 
+    public Guest(boolean importedData) {
+        if (importedData) return;
+        //Set Up Current Guest Number
+        number = totalGuests;
+        totalGuests++;
+    }
+
     public Guest(String lastName, String firstName, String phoneNumber, String email, String notes) {
         number = totalGuests;
         totalGuests++;
@@ -145,6 +152,14 @@ public class Guest {
     public void removeItem(Item item) {
         items.remove(item);
     }
+
+    public void setNumber(int newNumber) {
+        for (Guest g:Controller.guests) {
+            if (g.getGuestID().equals(""+newNumber)) return;
+        }
+        number = newNumber;
+    }
+
 
 
     /**
