@@ -1,0 +1,10 @@
+number,lastName,firstName,phoneNumber,email,notes,entryDonation,paidEntryDonationCash,numberShirts,numberCups,donation,paidAuctionItemsCash,amountPaid,changeGiven,orderComplete,number,name,price,notes,owner
+0,Richter,Cody,860-724-6339,crichter@umass.edu,Hello!,10,FALSE,1,1,10,FALSE,50,5,TRUE,1,Item1,50,Cool,0
+5,Aparamit,Chandra,-,-,-,-,-,-,-,-,-,-,-,-,2,Item2,10,Great,5
+10,Yeh,Luke,-,-,-,-,-,-,-,-,-,-,-,-,3,Item3,22,Wow,10
+15,Wang,Peilan,-,-,-,-,-,-,-,-,-,-,-,-,5,Item4,45,Woo,15
+16,Lerner,Hannah,-,-,-,-,-,-,-,-,-,-,-,-,,,,,
+19,Hanley,Aaron,-,ajhanley@umass.edu,-,-,-,-,-,-,-,-,-,-,,,,,
+20,Yang,Nanlan,-,-,-,-,-,-,-,-,-,-,-,-,,,,,
+21,France,Lillian,-,-,-,-,-,-,-,-,-,-,-,-,,,,,
+22,Tan,Ben,-,-,-,-,-,-,-,-,-,-,-,-,,,,,

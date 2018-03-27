@@ -63,6 +63,29 @@ public class DataLoader {
                 } catch (Exception ignored) {}
 
                 Controller.guests.add(g);
+                if (lineArray.length < 16) continue;
+
+                Item i = new Item(true);
+
+                try {
+                    i.setNumber(Integer.parseInt(lineArray[15]));
+                } catch (Exception ignored) {}
+
+                i.setName(lineArray[16]);
+                try {
+                    i.setPrice(Double.parseDouble(lineArray[17]));
+                } catch (Exception ignored) {}
+                i.setNotes(lineArray[18]);
+
+                int num = -1;
+                try {
+                    num = Integer.parseInt(lineArray[19]);
+                } catch (Exception ignored) {}
+
+                Controller.ownerToAdd.add(num);
+                Controller.itemToAddOwnerTo.add(i);
+
+                Controller.items.add(i);
             }
 
         } catch (IOException e) {

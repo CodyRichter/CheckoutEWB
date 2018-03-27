@@ -8,12 +8,19 @@ import javafx.scene.text.FontWeight;
 
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Stack;
 
 
 public class Controller {
 
     public static ObservableList<Guest> guests = FXCollections.observableArrayList();
     public static ObservableList<Item> items = FXCollections.observableArrayList();
+
+    public static ArrayList<Item> itemToAddOwnerTo = new ArrayList<Item>();
+    public static Queue<Integer> ownerToAdd = new PriorityQueue<Integer>();
 
     public Guest selectedGuest;
     public Item selectedItem;
@@ -146,6 +153,13 @@ public class Controller {
     @FXML
     public void loadData() throws FileNotFoundException{
         DataLoader.loadData();
+        for(Item i : itemToAddOwnerTo)
+        {
+            Guest g = Guest.getGuestFromID(""+ownerToAdd.remove());
+            if (g == null) continue;
+            i.setOwner(g);
+        }
+
         guestSelect.setItems(guests);
         itemSelect.setItems(items);
         updateItem();

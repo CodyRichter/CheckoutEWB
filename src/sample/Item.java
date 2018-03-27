@@ -21,6 +21,12 @@ public class Item {
         totalItems++;
     }
 
+    public Item(boolean fromFile) {
+        if(true)return;
+        number = totalItems;
+        totalItems++;
+    }
+
     public Item(String name, int price) {
         super();
         this.name = name;
@@ -41,6 +47,13 @@ public class Item {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void setNumber(int number) {
+        for (Item i : Controller.items) {
+            if (i.getNumber()==number) return;
+        }
+        this.number = number;
     }
 
     public String getName() {
