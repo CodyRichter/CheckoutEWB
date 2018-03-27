@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?language Java?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -12,19 +14,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
         <ToolBar prefHeight="40.0" prefWidth="217.0" BorderPane.alignment="CENTER">
             <items>
-            <Button mnemonicParsing="false" text="Save Data" />
-            <Button mnemonicParsing="false" text="Load Data" />
-                <Button mnemonicParsing="false" text="New Item" />
-                <Button mnemonicParsing="false" text="New Guest" />
-            <Button mnemonicParsing="false" text="Remove Guest">
+            <Button fx:id="saveData" mnemonicParsing="false" text="Save Data" />
+            <Button fx:id="loadData" mnemonicParsing="false" text="Load Data" />
+                <Button fx:id="addItem" mnemonicParsing="false" text="New Item" />
+                <Button fx:id="addGuest" mnemonicParsing="false" text="New Guest" />
+            <Button fx:id="removeGuest" mnemonicParsing="false" text="Remove Guest">
                <graphic>
                   <TextField prefHeight="25.0" prefWidth="37.0" />
                </graphic></Button>
-            <Button mnemonicParsing="false" text="Remove Item">
+            <Button fx:id="removeItem" mnemonicParsing="false" text="Remove Item">
                <graphic>
                   <TextField prefHeight="25.0" prefWidth="37.0" />
                </graphic></Button>
@@ -32,56 +34,56 @@
         </ToolBar>
     </top>
    <center>
-        <SplitPane dividerPositions="0.42474916387959866" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.32608695652173914" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="317.0">
                     <children>
                         <Accordion layoutY="7.0" />
-                        <ChoiceBox layoutX="90.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
+                        <ChoiceBox fx:id="itemSelect" layoutX="90.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
                         <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="158.0" text="Item Number:" />
                   <Label layoutX="14.0" layoutY="42.0" prefHeight="17.0" prefWidth="73.0" text="Item Name:" />
-                  <TextField layoutX="87.0" layoutY="38.0" />
+                  <TextField fx:id="itemName" layoutX="87.0" layoutY="38.0" />
                   <Label layoutX="45.0" layoutY="72.0" prefHeight="17.0" prefWidth="42.0" text="Price: $" />
-                  <TextField layoutX="87.0" layoutY="68.0" prefHeight="25.0" prefWidth="43.0" />
-                  <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" text="Update Profile" />
-                  <TextArea layoutX="251.0" layoutY="35.0" prefHeight="154.0" prefWidth="200.0" text="Initial Notes Here" />
+                  <TextField fx:id="itemPrice" layoutX="87.0" layoutY="68.0" prefHeight="25.0" prefWidth="43.0" />
+                  <Button fx:id="updateItem" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#updateItem" text="Update Item Profile" />
+                  <TextArea fx:id="itemNotes" layoutX="251.0" layoutY="35.0" prefHeight="154.0" prefWidth="200.0" text="" />
                   <Label layoutX="251.0" layoutY="14.0" prefHeight="17.0" prefWidth="158.0" text="Notes:" />
                   <Label layoutX="29.0" layoutY="168.0" prefHeight="17.0" prefWidth="44.0" text="Owner:" />
-                  <TextField layoutX="73.0" layoutY="164.0" />
+                  <TextField fx:id="itemOwner" layoutX="73.0" layoutY="164.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="253.0">
                     <children>
                         <Label layoutX="13.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="First Name:" />
                         <Label layoutX="10.0" layoutY="75.0" prefHeight="17.0" prefWidth="73.0" text="Last Name:" />
-                        <TextField layoutX="75.0" layoutY="71.0" />
+                        <TextField fx:id="lastName" layoutX="75.0" layoutY="71.0"/>
                         <Label layoutX="25.0" layoutY="104.0" prefHeight="17.0" prefWidth="51.0" text="Phone #:" />
-                        <TextField layoutX="75.0" layoutY="100.0" />
-                        <TextField layoutX="75.0" layoutY="41.0" />
-                        <Button layoutX="363.0" layoutY="364.0" mnemonicParsing="false" text="Update Profile" />
+                        <TextField fx:id="phoneNumber" layoutX="75.0" layoutY="100.0" />
+                        <TextField fx:id="firstName" layoutX="75.0" layoutY="41.0" />
+                        <Button layoutX="328.0" layoutY="356.0" mnemonicParsing="false" onAction="#updateGuest" text="Update Guest Profile" />
                         <Label layoutX="39.0" layoutY="135.0" prefHeight="17.0" prefWidth="37.0" text="Email:" />
-                        <TextField layoutX="75.0" layoutY="131.0" />
+                        <TextField fx:id="email" layoutX="75.0" layoutY="131.0"/>
                         <Label layoutX="12.0" layoutY="170.0" prefHeight="17.0" prefWidth="92.0" text="Entry Donation:" />
                         <Label layoutX="40.0" layoutY="200.0" prefHeight="17.0" prefWidth="64.0" text="# T-Shirts:" />
-                        <TextField layoutX="99.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField fx:id="tShirt" layoutX="99.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
                         <Label layoutX="145.0" layoutY="200.0" prefHeight="17.0" prefWidth="62.0" text="# Glasses:" />
-                        <TextField layoutX="199.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField fx:id="glasses" layoutX="199.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
                         <Label layoutX="17.0" layoutY="230.0" prefHeight="17.0" prefWidth="84.0" text="Auction Items:" />
-                        <ChoiceBox layoutX="143.0" layoutY="166.0" prefHeight="25.0" prefWidth="99.0" />
-                        <Label layoutX="26.0" layoutY="330.0" prefHeight="17.0" prefWidth="65.0" text="Total Due:" />
-                        <ChoiceBox layoutX="23.0" layoutY="352.0" prefHeight="25.0" prefWidth="99.0" />
+                        <Label layoutX="18.0" layoutY="338.0" prefHeight="17.0" prefWidth="65.0" text="Total Due:" />
                         <Label layoutX="244.0" layoutY="200.0" prefHeight="17.0" prefWidth="70.0" text="Donation: $" />
-                        <TextField layoutX="309.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
-                  <TextField layoutX="215.0" layoutY="364.0" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField fx:id="guestDonation" layoutX="309.0" layoutY="196.0" prefHeight="25.0" prefWidth="37.0" />
+                  <TextField fx:id="changeGiven" layoutX="215.0" layoutY="364.0" prefHeight="25.0" prefWidth="37.0" />
                   <Label layoutX="135.0" layoutY="368.0" prefHeight="17.0" prefWidth="83.0" text="Change Given:" />
-                  <TextField layoutX="99.0" layoutY="166.0" prefHeight="25.0" prefWidth="37.0" />
-                  <TextArea layoutX="255.0" layoutY="32.0" prefHeight="154.0" prefWidth="200.0" text="Initial Notes Here" />
+                  <TextField fx:id="entryDonation" layoutX="99.0" layoutY="166.0" prefHeight="25.0" prefWidth="37.0" />
+                  <TextArea fx:id="guestNotes" layoutX="255.0" layoutY="32.0" prefHeight="154.0" prefWidth="200.0" text="" />
                   <Label layoutX="255.0" layoutY="14.0" prefHeight="17.0" prefWidth="73.0" text="Notes:" />
-                        <ChoiceBox layoutX="106.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
+                        <ChoiceBox fx:id="guestSelect" layoutX="106.0" layoutY="10.0" prefHeight="25.0" prefWidth="99.0" />
                         <Label layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="89.0" text="Guest Number:" />
                   <Label layoutX="135.0" layoutY="338.0" prefHeight="17.0" prefWidth="83.0" text="Amount Paid:" />
-                  <TextField layoutX="215.0" layoutY="334.0" prefHeight="25.0" prefWidth="37.0" />
-                  <CheckBox layoutX="353.0" layoutY="338.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Order Complete" />
+                  <TextField fx:id="amountPaid" layoutX="215.0" layoutY="334.0" prefHeight="25.0" prefWidth="37.0" />
+                  <CheckBox fx:id="orderComplete" layoutX="335.0" layoutY="330.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Order Complete" />
+                  <RadioButton fx:id="auctionPaidByCheck" layoutX="12.0" layoutY="360.0" mnemonicParsing="false" text="Paid By Check" />
+                  <RadioButton fx:id="entryPaidByCheck" layoutX="151.0" layoutY="170.0" mnemonicParsing="false" text="Paid By Check" />
                     </children>
                 </AnchorPane>
             </items>
