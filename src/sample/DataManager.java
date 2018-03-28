@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DataManager {
-    private static String filePath = "src\\sample\\data.csv";
+    private static String filePath = "data.csv";
 
 
     public static void loadData() throws FileNotFoundException{
