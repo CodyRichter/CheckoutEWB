@@ -6,10 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -19,11 +17,11 @@ public class Controller {
     public static ObservableList<Guest> guests = FXCollections.observableArrayList();
     public static ObservableList<Item> items = FXCollections.observableArrayList();
 
-    public static ArrayList<Item> itemToAddOwnerTo = new ArrayList<Item>();
-    public static Queue<Integer> ownerToAdd = new PriorityQueue<Integer>();
+    public static ArrayList<Item> itemToAddOwnerTo = new ArrayList<>();
+    public static Queue<Integer> ownerToAdd = new PriorityQueue<>();
 
-    public Guest selectedGuest;
-    public Item selectedItem;
+    private Guest selectedGuest;
+    private Item selectedItem;
 
     public Controller() {
     }
@@ -39,9 +37,6 @@ public class Controller {
 
     @FXML
     MenuItem loadData;
-
-    @FXML
-    MenuItem about;
 
     @FXML
     MenuItem documentation;
@@ -151,7 +146,7 @@ public class Controller {
     }
 
     @FXML
-    public void loadData() throws FileNotFoundException{
+    public void loadData() {
         DataManager.loadData();
         for(Item i : itemToAddOwnerTo)
         {
@@ -193,7 +188,7 @@ public class Controller {
 
     @FXML
     public void removeGuest() {
-        if (removeGuestNum.getText() == null || removeGuestNum.getText() == "") return;
+        if (removeGuestNum.getText() == null) return;
         Guest g = null;
         try {
             int guestNumber = Integer.parseInt(removeGuestNum.getText());
@@ -209,7 +204,7 @@ public class Controller {
     }
 
     public void removeItem() {
-        if (removeItemNum.getText() == null || removeItemNum.getText() == "") return;
+        if (removeItemNum.getText() == null) return;
         Item i = null;
         try {
             int itemNumber = Integer.parseInt(removeItemNum.getText());
@@ -231,7 +226,7 @@ public class Controller {
         updateGuestTextField(selectedGuest);
     }
 
-    public void clearGuestData() {
+    private void clearGuestData() {
         lastName.setText("");
         firstName.setText("");
         phoneNumber.setText("");
@@ -251,7 +246,7 @@ public class Controller {
         totalDue.setText("[X]");
     }
 
-    public void clearItemData() {
+    private void clearItemData() {
         itemName.setText("");
         itemPrice.setText("");
         itemOwner.setText("");
@@ -267,7 +262,7 @@ public class Controller {
     }
 
     @FXML
-    public void saveCurrentItemData(Item i) {
+    private void saveCurrentItemData(Item i) {
         i.setName(itemName.getText());
         i.setNotes(itemNotes.getText());
 
@@ -291,7 +286,7 @@ public class Controller {
     }
 
     @FXML
-    public void updateItemTextField(Item i) {
+    private void updateItemTextField(Item i) {
         if (i == null) {clearItemData(); return;}
         itemName.setText(i.getName());
         itemPrice.setText(""+i.getPrice());
@@ -379,15 +374,15 @@ public class Controller {
     }
 
     private void updateGuestItems(Guest g) {
-        String owned = "";
+        StringBuilder owned = new StringBuilder();
         g.getItems().clear();
         for (Item i : items) {
             if (i.getOwner() == g) {
-            owned += "[$"+ i.getPrice()+"]  #["+ i.getNumber()+"]    "+i.getName() + "\n";
+            owned.append("[$").append(i.getPrice()).append("]  #[").append(i.getNumber()).append("]    ").append(i.getName()).append("\n");
             g.getItems().add(i);
             }
         }
-        guestItemList.setText(owned);
+        guestItemList.setText(owned.toString());
     }
 
 }

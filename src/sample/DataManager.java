@@ -4,26 +4,22 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class DataManager {
     private static String filePath = "data.csv";
 
 
-    public static void loadData() throws FileNotFoundException{
+    public static void loadData() {
         Controller.items.clear();
         Controller.guests.clear();
 
         String csvFile = filePath;
-        String line = "";
+        String line;
         String cvsSplitBy = ",";
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             boolean firstThrough = false;
-            int iter = 1;
             while ((line = br.readLine()) != null) {
                 if (!firstThrough) {firstThrough = true; continue;}
                 String[] lineArray = line.split(cvsSplitBy);
@@ -150,7 +146,7 @@ public class DataManager {
         }
         //System.out.println(b.toString());
 
-        List<String> lines = Arrays.asList(b.toString());
+        List<String> lines = Collections.singletonList(b.toString());
         Path file = Paths.get(filePath);
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
@@ -159,51 +155,50 @@ public class DataManager {
     }
 
     private static String writeHeader() {
-        StringBuilder b = new StringBuilder();
-        b.append("number");
-        b.append(",");
-        b.append("lastName");
-        b.append(",");
-        b.append("firstName");
-        b.append(",");
-        b.append("phoneNumber");
-        b.append(",");
-        b.append("email");
-        b.append(",");
-        b.append("notes");
-        b.append(",");
-        b.append("entryDonation");
-        b.append(",");
-        b.append("paidEntryDonationCash");
-        b.append(",");
-        b.append("numberShirts");
-        b.append(",");
-        b.append("numberCups");
-        b.append(",");
-        b.append("donation");
-        b.append(",");
-        b.append("paidAuctionItemsCash");
-        b.append(",");
-        b.append("amountPaid");
-        b.append(",");
-        b.append("changeGiven");
-        b.append(",");
-        b.append("orderComplete");
-        b.append(",");
-        b.append("itemNumber");
-        b.append(",");
-        b.append("itemName");
-        b.append(",");
-        b.append("itemPrice");
-        b.append(",");
-        b.append("itemNotes");
-        b.append(",");
-        b.append("itemOwnerNumber");
-        b.append("\n");
 
-        return b.toString();
+        return "number" +
+                "," +
+                "lastName" +
+                "," +
+                "firstName" +
+                "," +
+                "phoneNumber" +
+                "," +
+                "email" +
+                "," +
+                "notes" +
+                "," +
+                "entryDonation" +
+                "," +
+                "paidEntryDonationCash" +
+                "," +
+                "numberShirts" +
+                "," +
+                "numberCups" +
+                "," +
+                "donation" +
+                "," +
+                "paidAuctionItemsCash" +
+                "," +
+                "amountPaid" +
+                "," +
+                "changeGiven" +
+                "," +
+                "orderComplete" +
+                "," +
+                "itemNumber" +
+                "," +
+                "itemName" +
+                "," +
+                "itemPrice" +
+                "," +
+                "itemNotes" +
+                "," +
+                "itemOwnerNumber" +
+                "\n";
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static File getFile() {
         File f = new File(filePath);
         try {
