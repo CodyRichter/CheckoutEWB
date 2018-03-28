@@ -14,6 +14,9 @@ public class DataManager {
 
 
     public static void loadData() throws FileNotFoundException{
+        Controller.items.clear();
+        Controller.guests.clear();
+
         String csvFile = filePath;
         String line = "";
         String cvsSplitBy = ",";
@@ -102,7 +105,7 @@ public class DataManager {
         }
     }
 
-    public static void saveData() {
+    public static void saveData(){
         File f = getFile();
         String fileContents = writeHeader();
         //Gets Largest Size Of Total Collections for number of rows in table
@@ -132,7 +135,8 @@ public class DataManager {
             row[i][16] = ""+item.getName();
             row[i][17] = ""+item.getPrice();
             row[i][18] = ""+item.getNotes();
-            row[i][19] = ""+item.getOwner().getNumber();
+            if (item.getOwner() == null) row[i][19] = " ";
+            else row[i][19] = ""+item.getOwner().getNumber();
         }
 
         StringBuilder b = new StringBuilder(fileContents);
@@ -202,6 +206,9 @@ public class DataManager {
 
     private static File getFile() {
         File f = new File(filePath);
+        try {
+            if (!f.exists()) f.createNewFile();
+        } catch (Exception ignored) {}
         return f;
     }
 

@@ -8,11 +8,11 @@ public class Item {
     private int number;
 
     //Information
-    private String name;
-    private double price;
-    private String notes;
+    private String name = null;
+    private double price = 0.0;
+    private String notes = null;
 
-    private Guest owner;
+    private Guest owner = null;
 
 
     public Item() {
