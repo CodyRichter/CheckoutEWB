@@ -75,7 +75,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="458.0">
                     <children>
                         <TextField fx:id="firstName" layoutX="75.0" layoutY="41.0" />
-                        <TextField fx:id="lastName" layoutX="75.0" layoutY="71.0" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="172.0" AnchorPane.topAnchor="71.0" />
+                        <TextField fx:id="lastName" layoutX="75.0" layoutY="71.0" />
                         <TextField fx:id="phoneNumber" layoutX="75.0" layoutY="100.0" />
                         <TextField fx:id="email" layoutX="75.0" layoutY="131.0" />
                   <TextField fx:id="entryDonation" layoutX="99.0" layoutY="166.0" prefHeight="25.0" prefWidth="37.0" />

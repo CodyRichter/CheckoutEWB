@@ -2,7 +2,7 @@ package sample;
 
 import java.util.ArrayList;
 
-public class Guest {
+public class Guest implements Comparable<Guest>{
     private static int totalGuests = 0; //Total Number Of Guests Attending
 
     //ID Number:
@@ -303,6 +303,12 @@ public class Guest {
         if ((lastName == null || lastName.equals("")) && (firstName == null || firstName.equals(""))) return ""+number;
         if (firstName == null || firstName.equals("")) return ""+number+" "+lastName;
         return ""+number+" "+lastName + ", " + firstName;
+    }
+
+    public int compareTo(Guest g) {
+        if (g.getNumber() > this.getNumber()) return 1;
+        if (g.getNumber() < this.getNumber()) return -1;
+        return 0;
     }
 
 }

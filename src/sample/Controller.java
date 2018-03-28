@@ -9,6 +9,7 @@ import javafx.scene.text.FontWeight;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 

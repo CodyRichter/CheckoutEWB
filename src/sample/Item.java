@@ -1,6 +1,6 @@
 package sample;
 
-public class Item {
+public class Item implements Comparable<Item>{
 
     private static int totalItems = 0; //Total Number Of Guests Attending
 
@@ -86,4 +86,11 @@ public class Item {
         if (name == null || name.equals("")) return ""+number;
        return ""+number+" "+name;
     }
+
+    public int compareTo(Item i) {
+        if (i.getNumber() > this.getNumber()) return 1;
+        if (i.getNumber() < this.getNumber()) return -1;
+        return 0;
+    }
+
 }
