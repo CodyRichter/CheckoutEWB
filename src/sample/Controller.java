@@ -11,7 +11,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Stack;
 
 
 public class Controller {
@@ -140,19 +139,19 @@ public class Controller {
     CheckBox orderComplete;
 
     @FXML
-    RadioButton auctionPaidByCheck;
+    CheckBox auctionPaidByCheck;
 
     @FXML
-    RadioButton entryPaidByCheck;
+    CheckBox entryPaidByCheck;
 
     @FXML
     public void saveData() {
-        // TODO
+        DataManager.saveData();
     }
 
     @FXML
     public void loadData() throws FileNotFoundException{
-        DataLoader.loadData();
+        DataManager.loadData();
         for(Item i : itemToAddOwnerTo)
         {
             Guest g = Guest.getGuestFromID(""+ownerToAdd.remove());
