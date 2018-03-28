@@ -17,7 +17,7 @@ public class Controller {
     public static ObservableList<Guest> guests = FXCollections.observableArrayList();
     public static ObservableList<Item> items = FXCollections.observableArrayList();
 
-    public static ArrayList<Item> itemToAddOwnerTo = new ArrayList<>();
+    public static Queue<Item> itemToAddOwnerTo = new PriorityQueue<>();
     public static Queue<Integer> ownerToAdd = new PriorityQueue<>();
 
     private Guest selectedGuest;
