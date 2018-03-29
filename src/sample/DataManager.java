@@ -121,11 +121,11 @@ public class DataManager {
             row[i][4] = g.getEmail();
             row[i][5] = g.getNotes();
             row[i][6] = ""+g.getEntryDonation();
-            row[i][7] = ""+g.isPaidEntryDonationCash();
+            row[i][7] = ""+g.getPaidEntryDonationCash();
             row[i][8] = ""+g.getNumberShirts();
             row[i][9] = ""+g.getNumberCups();
             row[i][10] = ""+g.getDonation();
-            row[i][11] = ""+g.isPaidAuctionItemsCash();
+            row[i][11] = ""+g.getPaidAuctionItemsCash();
             row[i][12] = ""+g.getAmountPaid();
             row[i][13] = ""+g.getChangeGiven();
             row[i][14] = ""+g.getOrderComplete();

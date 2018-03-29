@@ -136,7 +136,8 @@ public class Guest implements Comparable<Guest>{
      * @param paidCash Whether Guest has paid cash for entry
      */
     public void setPaidEntryDonationCash(boolean paidCash) {
-        paidEntryDonationCash = paidCash;
+        if (paidCash) paidEntryDonationCash = true;
+        else paidEntryDonationCash = false;
     }
 
     /**
@@ -145,7 +146,8 @@ public class Guest implements Comparable<Guest>{
      * @param paidCash Whether Guest has paid cash for auction items
      */
     public void setPaidAuctionItemsCash(boolean paidCash) {
-        paidAuctionItemsCash = paidCash;
+        if (paidCash) paidAuctionItemsCash = true;
+        else paidAuctionItemsCash = false;
     }
 
     /**
@@ -242,7 +244,7 @@ public class Guest implements Comparable<Guest>{
         return entryDonation;
     }
 
-    public boolean isPaidEntryDonationCash() {
+    public boolean getPaidEntryDonationCash() {
         return paidEntryDonationCash;
     }
 
@@ -258,7 +260,7 @@ public class Guest implements Comparable<Guest>{
         return items;
     }
 
-    public boolean isPaidAuctionItemsCash() {
+    public boolean getPaidAuctionItemsCash() {
         return paidAuctionItemsCash;
     }
 

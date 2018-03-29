@@ -1,14 +1,11 @@
 package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import javax.swing.event.DocumentListener;
-import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.*;
 
@@ -405,12 +402,11 @@ public class Controller {
             g.setAmountPaid(d);
         } catch (Exception ignored) {}
 
-        setGuestNumber();
-
         //Boolean Inputs
         g.setOrderComplete(orderComplete.isSelected());
         g.setPaidAuctionItemsCash(!auctionPaidByCheck.isSelected());
         g.setPaidEntryDonationCash(!entryPaidByCheck.isSelected());
+        setGuestNumber();//Do This Last
     }
 
     @FXML
@@ -428,10 +424,9 @@ public class Controller {
         guestNotes.setText(g.getNotes());
         amountPaid.setText(""+g.getAmountPaid());
         orderComplete.setSelected(g.getOrderComplete());
-        auctionPaidByCheck.setSelected(!g.isPaidAuctionItemsCash());
-        entryPaidByCheck.setSelected(!g.isPaidEntryDonationCash());
+        auctionPaidByCheck.setSelected(!g.getPaidAuctionItemsCash());
+        entryPaidByCheck.setSelected(!g.getPaidEntryDonationCash());
         guestNumber.setText(""+g.getNumber());
-
         updateGuestItems(g);
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText(""+g.checkout());
