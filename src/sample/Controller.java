@@ -273,7 +273,7 @@ public class Controller {
         guestNumber.setText("");
         paymentNeeded.setText("");
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
-        totalDue.setText("[X]");
+        totalDue.setText("");
     }
 
     private void clearItemData() {
