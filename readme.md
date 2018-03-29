@@ -12,7 +12,7 @@ The item system works in a similar way to the guest system, but it is able to ke
 
 
 ### Importing/Exporting Data
-In order to import data into the program, make a file named "data.csv" and place it in the same directory as the executable jar file (e.g. if the jar file is in Downloads, place the data.csv file in Downloads too). The
+In order to import data into the program, make a file named "data.csv" and place it in the same directory as the executable jar file (e.g. if the jar file is in Downloads, place the data.csv file in Downloads too). The program will load the user/item data directly into the program when you go to File -> Load.
 
 
 ## User Interface
