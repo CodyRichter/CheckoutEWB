@@ -13,3 +13,47 @@ The item system works in a similar way to the guest system, but it is able to ke
 
 ### Importing/Exporting Data
 In order to import data into the program, make a file named "data.csv" and place it in the same directory as the executable jar file (e.g. if the jar file is in Downloads, place the data.csv file in Downloads too). The
+
+
+## User Interface
+
+### Header
+![alt text](https://i.imgur.com/2SCYq6A.png)
+
+#### File:
+#### Help:
+#### New Item:
+#### New Guest:
+#### Remove Item:
+#### Remove Guest
+
+### Guest Information
+![alt text](https://i.imgur.com/pboLqRc.png)
+
+#### Guest Number:
+#### First Name:
+#### Last Name:
+#### Phone Number:
+#### Email:
+#### Notes:
+#### Entry Donation:
+#### Paid By Check:
+#### Number of T-Shirts:
+#### Number of Glasses:
+#### Donation:
+#### Auction Items:
+#### Total Due:
+#### #### Paid By Check:
+#### Amount Paid:
+#### Change Given:
+#### Update Guest Profile:
+
+### Item Information
+![alt text](https://i.imgur.com/6tOSIgF.png)
+
+#### Item Number:
+#### Item Name:
+#### Price:
+#### Owner:
+#### Notes:
+#### Update Item Profile:
