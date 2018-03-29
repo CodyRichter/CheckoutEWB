@@ -79,6 +79,9 @@ public class Controller {
     TextArea itemNotes;
 
     @FXML
+    TextField itemNumber;
+
+    @FXML
     TextField itemOwner;
 
     @FXML
@@ -99,6 +102,9 @@ public class Controller {
 
     @FXML
     TextField email;
+
+    @FXML
+    TextField guestNumber;
 
     @FXML
     TextField tShirt;
@@ -262,6 +268,7 @@ public class Controller {
         auctionPaidByCheck.setSelected(false);
         entryPaidByCheck.setSelected(false);
         guestItemList.setText("");
+        guestNumber.setText("");
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText("[X]");
     }
@@ -271,6 +278,7 @@ public class Controller {
         itemPrice.setText("");
         itemOwner.setText("");
         itemNotes.setText("");
+        itemNumber.setText("");
     }
 
     @FXML
@@ -296,6 +304,9 @@ public class Controller {
             double d = Double.parseDouble(itemPrice.getText());
             i.setPrice(d);
         } catch (Exception ignored) {}
+
+        setItemNumber();
+
     }
 
     @FXML
@@ -310,9 +321,36 @@ public class Controller {
         if (i == null) {clearItemData(); return;}
         itemName.setText(i.getName());
         itemPrice.setText(""+i.getPrice());
+        itemNumber.setText(""+i.getNumber());
         if (selectedItem.getOwner() != null) itemOwner.setText(""+i.getOwner().getNumber());
         else itemOwner.setText("");
         itemNotes.setText(i.getNotes());
+    }
+
+    @FXML
+    public void setGuestNumber() {
+        if (selectedGuest == null) return;
+        int i = -1;
+        try {
+            i = Integer.parseInt(guestNumber.getText());
+        } catch (Exception ignored) {}
+        if (i < 0) return;
+        selectedGuest.setNumber(i);
+        FXCollections.sort(guests);
+        guestSelect.setItems(guests);
+    }
+
+    @FXML
+    public void setItemNumber() {
+        if (selectedItem == null) return;
+        int i = -1;
+        try {
+            i = Integer.parseInt(itemNumber.getText());
+        } catch (Exception ignored) {}
+        if (i < 0) return;
+        selectedItem.setNumber(i);
+        FXCollections.sort(items);
+        itemSelect.setItems(items);
     }
 
 
@@ -363,6 +401,7 @@ public class Controller {
             g.setAmountPaid(d);
         } catch (Exception ignored) {}
 
+        setGuestNumber();
 
         //Boolean Inputs
         g.setOrderComplete(orderComplete.isSelected());
@@ -387,6 +426,7 @@ public class Controller {
         orderComplete.setSelected(g.getOrderComplete());
         auctionPaidByCheck.setSelected(!g.isPaidAuctionItemsCash());
         entryPaidByCheck.setSelected(!g.isPaidEntryDonationCash());
+        guestNumber.setText(""+g.getNumber());
 
         updateGuestItems(g);
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));

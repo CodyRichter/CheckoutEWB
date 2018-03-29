@@ -54,7 +54,7 @@
         </ToolBar>
     </top>
    <center>
-        <SplitPane dividerPositions="0.38721804511278196" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.5952380952380952" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="269.0">
                     <children>
@@ -67,10 +67,12 @@
                         <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Item Number:" />
                   <Label layoutX="14.0" layoutY="42.0" prefHeight="17.0" prefWidth="73.0" text="Item Name:" />
                   <Label layoutX="45.0" layoutY="72.0" prefHeight="17.0" prefWidth="42.0" text="Price: $" />
-                  <TextArea fx:id="itemNotes" layoutX="251.0" layoutY="35.0" prefHeight="154.0" prefWidth="200.0" text="" />
-                  <Label layoutX="251.0" layoutY="14.0" prefHeight="17.0" prefWidth="158.0" text="Notes:" />
+                  <TextArea fx:id="itemNotes" layoutX="243.0" layoutY="59.0" prefHeight="154.0" prefWidth="200.0" text="" />
+                  <Label layoutX="243.0" layoutY="38.0" prefHeight="17.0" prefWidth="158.0" text="Notes:" />
                   <Label layoutX="32.0" layoutY="104.0" prefHeight="17.0" prefWidth="55.0" text="Owner #:" />
                   <Button fx:id="removeOwner" layoutX="135.0" layoutY="100.0" mnemonicParsing="false" onAction="#removeItemOwner" text="Remove" />
+                  <TextField fx:id="itemNumber" layoutX="256.0" layoutY="10.0" prefHeight="25.0" prefWidth="51.0" />
+                  <Label layoutX="243.0" layoutY="14.0" prefHeight="17.0" prefWidth="14.0" text="#:" />
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="551.0">
@@ -100,13 +102,15 @@
                         <Label layoutX="18.0" layoutY="338.0" prefHeight="17.0" prefWidth="65.0" text="Total Due:$" />
                         <Label layoutX="244.0" layoutY="200.0" prefHeight="17.0" prefWidth="70.0" text="Donation: $" />
                   <Label layoutX="166.0" layoutY="367.0" prefHeight="17.0" prefWidth="83.0" text="Change Given:" />
-                  <TextArea fx:id="guestNotes" layoutX="255.0" layoutY="44.0" prefHeight="142.0" prefWidth="200.0" text="" />
-                  <Label layoutX="255.0" layoutY="14.0" prefHeight="17.0" prefWidth="73.0" text="Notes:" />
+                  <TextArea fx:id="guestNotes" layoutX="255.0" layoutY="62.0" prefHeight="124.0" prefWidth="244.0" text="" />
+                  <Label layoutX="255.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="Notes:" />
                         <ComboBox fx:id="guestSelect" layoutX="99.0" layoutY="10.0" onAction="#selectGuestFromList" prefHeight="25.0" prefWidth="142.0" />
                         <Label layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="89.0" text="Guest Number:" />
                   <Label layoutX="166.0" layoutY="337.0" prefHeight="17.0" prefWidth="83.0" text="Amount Paid:" />
                   <Label fx:id="totalDue" layoutX="82.0" layoutY="338.0" prefHeight="17.0" prefWidth="82.0" text="" />
                   <TextArea fx:id="guestItemList" editable="false" layoutX="18.0" layoutY="249.0" prefHeight="83.0" prefWidth="237.0" text="" />
+                  <TextField fx:id="guestNumber" layoutX="265.0" layoutY="10.0" prefHeight="25.0" prefWidth="51.0" />
+                  <Label layoutX="252.0" layoutY="14.0" prefHeight="17.0" prefWidth="14.0" text="#:" />
                     </children>
                 </AnchorPane>
             </items>
