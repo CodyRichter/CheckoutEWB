@@ -66,11 +66,11 @@ public class Guest implements Comparable<Guest>{
             }
         }
 
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.notes = notes;
+        setLastName(lastName);
+        setFirstName(firstName);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setNotes(notes);
 
     }
 
@@ -81,15 +81,15 @@ public class Guest implements Comparable<Guest>{
     //
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = DataManager.clean(lastName);
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = DataManager.clean(firstName);
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = DataManager.clean(phoneNumber);
     }
 
     public void setDonation(double donation) {
@@ -97,7 +97,7 @@ public class Guest implements Comparable<Guest>{
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = DataManager.clean(email);
     }
 
     /**
@@ -185,14 +185,7 @@ public class Guest implements Comparable<Guest>{
      * @param notes Additional notes to make
      */
     public void setNotes(String notes) {
-        String result = notes.replace('\n',' ');
-        result = result.replace('\r',' ');
-        result = result.replace('\n',' ');
-        result = result.replace('\t',' ');
-        result = result.replace('\\',' ');
-        result = result.replace('\"',' ');
-        result = result.replace('\'',' ');
-        this.notes = result;
+        this.notes = DataManager.clean(notes);;
     }
 
     /**

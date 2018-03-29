@@ -100,7 +100,7 @@
                         <Label layoutX="18.0" layoutY="338.0" prefHeight="17.0" prefWidth="65.0" text="Total Due:$" />
                         <Label layoutX="244.0" layoutY="200.0" prefHeight="17.0" prefWidth="70.0" text="Donation: $" />
                   <Label layoutX="166.0" layoutY="367.0" prefHeight="17.0" prefWidth="83.0" text="Change Given:" />
-                  <TextArea fx:id="guestNotes" layoutX="255.0" layoutY="32.0" prefHeight="154.0" prefWidth="200.0" text="" />
+                  <TextArea fx:id="guestNotes" layoutX="255.0" layoutY="44.0" prefHeight="142.0" prefWidth="200.0" text="" />
                   <Label layoutX="255.0" layoutY="14.0" prefHeight="17.0" prefWidth="73.0" text="Notes:" />
                         <ComboBox fx:id="guestSelect" layoutX="99.0" layoutY="10.0" onAction="#selectGuestFromList" prefHeight="25.0" prefWidth="142.0" />
                         <Label layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="89.0" text="Guest Number:" />

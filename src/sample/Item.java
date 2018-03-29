@@ -39,7 +39,7 @@ public class Item implements Comparable<Item>{
 
     public Item(String name, int price) {
         super();
-        this.name = name;
+        setName(name);
         this.price = price;
     }
 
@@ -48,7 +48,7 @@ public class Item implements Comparable<Item>{
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = DataManager.clean(name);
     }
 
     public void setOwner(Guest owner) {
@@ -56,14 +56,7 @@ public class Item implements Comparable<Item>{
     }
 
     public void setNotes(String notes) {
-        String result = notes.replace('\n',' ');
-        result = result.replace('\r',' ');
-        result = result.replace('\n',' ');
-        result = result.replace('\t',' ');
-        result = result.replace('\\',' ');
-        result = result.replace('\"',' ');
-        result = result.replace('\'',' ');
-        this.notes = result;
+        this.notes = DataManager.clean(notes);
     }
 
     public void setNumber(int newNumber) {

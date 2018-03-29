@@ -212,4 +212,15 @@ public class DataManager {
         return f;
     }
 
+    public static String clean(String input) {
+        String result = input.replace('\n',' ');
+        result = result.replace('\r',' ');
+        result = result.replace('\n',' ');
+        result = result.replace('\t',' ');
+        result = result.replace('\\',' ');
+        result = result.replace('\"',' ');
+        result = result.replace('\'',' ');
+        return result;
+    }
+
 }
