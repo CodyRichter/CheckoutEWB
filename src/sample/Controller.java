@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -105,6 +106,9 @@ public class Controller {
 
     @FXML
     TextField guestNumber;
+
+    @FXML
+    Label paymentNeeded;
 
     @FXML
     TextField tShirt;
@@ -269,6 +273,7 @@ public class Controller {
         entryPaidByCheck.setSelected(false);
         guestItemList.setText("");
         guestNumber.setText("");
+        paymentNeeded.setText("");
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText("[X]");
     }
@@ -430,6 +435,11 @@ public class Controller {
         updateGuestItems(g);
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText(""+g.checkout());
+        if(g.getAmountPaid() < g.checkout()) {
+            paymentNeeded.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+            paymentNeeded.setTextFill(Color.RED);
+            paymentNeeded.setText("*Payment Required*");
+        } else paymentNeeded.setText("");
     }
 
     @FXML

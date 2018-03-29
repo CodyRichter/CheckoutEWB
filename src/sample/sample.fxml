@@ -54,7 +54,7 @@
         </ToolBar>
     </top>
    <center>
-        <SplitPane dividerPositions="0.5952380952380952" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.18295739348370926" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="269.0">
                     <children>
@@ -111,6 +111,7 @@
                   <TextArea fx:id="guestItemList" editable="false" layoutX="18.0" layoutY="249.0" prefHeight="83.0" prefWidth="237.0" text="" />
                   <TextField fx:id="guestNumber" layoutX="265.0" layoutY="10.0" prefHeight="25.0" prefWidth="51.0" />
                   <Label layoutX="252.0" layoutY="14.0" prefHeight="17.0" prefWidth="14.0" text="#:" />
+                  <Label fx:id="paymentNeeded" alignment="CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="309.0" prefHeight="21.0" prefWidth="207.0" text="*Payment Required*" />
                     </children>
                 </AnchorPane>
             </items>
