@@ -8,6 +8,7 @@ import javafx.scene.text.FontWeight;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -19,6 +20,7 @@ public class Controller {
 
     public static Queue<Item> itemToAddOwnerTo = new PriorityQueue<>();
     public static Queue<Integer> ownerToAdd = new PriorityQueue<>();
+    public static HashMap<Item,Integer> ownerSetup = new HashMap<>();
 
     private Guest selectedGuest;
     private Item selectedItem;
@@ -148,11 +150,20 @@ public class Controller {
     @FXML
     public void loadData() {
         DataManager.loadData();
-        for(Item i : itemToAddOwnerTo)
+        /*for(Item i : itemToAddOwnerTo)
         {
             Guest g = Guest.getGuestFromID(""+ownerToAdd.remove());
             if (g == null) continue;
             i.setOwner(g);
+        }*/
+
+        for (Item i:items) {
+            if (ownerSetup.containsKey(i)) {
+                Guest g = Guest.getGuestFromID(""+ownerSetup.get(i));
+                if (g == null) continue;
+                i.setOwner(g);
+                ownerSetup.remove(i);
+            }
         }
 
         guestSelect.setItems(guests);
@@ -372,6 +383,14 @@ public class Controller {
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText(""+g.checkout());
     }
+
+    @FXML
+    public void removeItemOwner() {
+        if(selectedItem==null) return;
+        selectedItem.setOwner(null);
+        itemOwner.clear();
+    }
+
 
     private void updateGuestItems(Guest g) {
         StringBuilder owned = new StringBuilder();

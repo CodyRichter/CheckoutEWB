@@ -90,9 +90,10 @@ public class DataManager {
                     num = Integer.parseInt(lineArray[19]);
                 } catch (Exception ignored) {}
 
-                Controller.ownerToAdd.add(num);
-                Controller.itemToAddOwnerTo.add(i);
+                //Controller.ownerToAdd.add(num);
+                //Controller.itemToAddOwnerTo.add(i);
 
+                Controller.ownerSetup.put(i,num);
                 Controller.items.add(i);
             }
 
