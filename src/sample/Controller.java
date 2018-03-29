@@ -1,11 +1,14 @@
 package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import javax.swing.event.DocumentListener;
+import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.*;
 
@@ -338,7 +341,7 @@ public class Controller {
         selectedGuest.setNumber(i);
         FXCollections.sort(guests);
         guestSelect.setItems(guests);
-        if (selectedItem.getOwner() == selectedGuest) itemOwner.setText(""+selectedItem.getOwner().getNumber());
+        if (selectedItem != null && selectedItem.getOwner() == selectedGuest) itemOwner.setText(""+selectedItem.getOwner().getNumber());
     }
 
     @FXML
@@ -437,6 +440,26 @@ public class Controller {
     @FXML
     public void updatePrice() {
         if (selectedGuest==null) return;
+
+        try {
+            int i = Integer.parseInt(entryDonation.getText());
+            selectedGuest.setEntryDonation(i);
+        } catch (Exception ignored) {}
+
+        try {
+            int i = Integer.parseInt(tShirt.getText());
+            selectedGuest.setNumberShirts(i);
+        } catch (Exception ignored) {}
+
+        try {
+            int i = Integer.parseInt(glasses.getText());
+            selectedGuest.setNumberCups(i);
+        } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(guestDonation.getText());
+            selectedGuest.setDonation(d);
+        } catch (Exception ignored) {}
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText(""+selectedGuest.checkout());
     }
@@ -460,5 +483,7 @@ public class Controller {
         }
         guestItemList.setText(owned.toString());
     }
+
+
 
 }

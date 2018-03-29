@@ -299,7 +299,7 @@ public class Guest implements Comparable<Guest>{
         }
 
         sum += donation;
-
+        sum += entryDonation;
         return sum;
     }
 
