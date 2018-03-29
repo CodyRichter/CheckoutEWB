@@ -56,7 +56,14 @@ public class Item implements Comparable<Item>{
     }
 
     public void setNotes(String notes) {
-        this.notes = notes;
+        String result = notes.replace('\n',' ');
+        result = result.replace('\r',' ');
+        result = result.replace('\n',' ');
+        result = result.replace('\t',' ');
+        result = result.replace('\\',' ');
+        result = result.replace('\"',' ');
+        result = result.replace('\'',' ');
+        this.notes = result;
     }
 
     public void setNumber(int newNumber) {

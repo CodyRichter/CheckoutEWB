@@ -185,7 +185,14 @@ public class Guest implements Comparable<Guest>{
      * @param notes Additional notes to make
      */
     public void setNotes(String notes) {
-        this.notes = notes;
+        String result = notes.replace('\n',' ');
+        result = result.replace('\r',' ');
+        result = result.replace('\n',' ');
+        result = result.replace('\t',' ');
+        result = result.replace('\\',' ');
+        result = result.replace('\"',' ');
+        result = result.replace('\'',' ');
+        this.notes = result;
     }
 
     /**

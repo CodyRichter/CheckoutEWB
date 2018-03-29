@@ -394,6 +394,13 @@ public class Controller {
     }
 
     @FXML
+    public void updatePrice() {
+        if (selectedGuest==null) return;
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+        totalDue.setText(""+selectedGuest.checkout());
+    }
+
+    @FXML
     public void removeItemOwner() {
         if(selectedItem==null) return;
         selectedItem.setOwner(null);
