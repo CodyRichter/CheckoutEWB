@@ -338,6 +338,7 @@ public class Controller {
         selectedGuest.setNumber(i);
         FXCollections.sort(guests);
         guestSelect.setItems(guests);
+        if (selectedItem.getOwner() == selectedGuest) itemOwner.setText(""+selectedItem.getOwner().getNumber());
     }
 
     @FXML
