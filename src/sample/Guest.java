@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Guest implements Comparable<Guest>{
     private static int totalGuests = 0; //Total Number Of Guests Attending
+    private static boolean[] numberUsed = new boolean[10000]; //Support for up to 10,000 people
 
     //ID Number:
-    private int number;
+    private int number = -1;
+
 
     //Personal Information
     private String lastName;
@@ -34,21 +36,35 @@ public class Guest implements Comparable<Guest>{
 
 
     public Guest() {
-        //Set Up Current Guest Number
-        number = totalGuests;
-        totalGuests++;
+        for (int i = 0; i < numberUsed.length; i++) {
+            if (!numberUsed[i]) {
+                number = i;
+                numberUsed[i] = true;
+                break;
+            }
+        }
     }
 
     public Guest(boolean importedData) {
         if (importedData) return;
         //Set Up Current Guest Number
-        number = totalGuests;
-        totalGuests++;
+        for (int i = 0; i < numberUsed.length; i++) {
+            if (!numberUsed[i]) {
+                number = i;
+                numberUsed[i] = true;
+                break;
+            }
+        }
     }
 
     public Guest(String lastName, String firstName, String phoneNumber, String email, String notes) {
-        number = totalGuests;
-        totalGuests++;
+        for (int i = 0; i < numberUsed.length; i++) {
+            if (!numberUsed[i]) {
+                number = i;
+                numberUsed[i] = true;
+                break;
+            }
+        }
 
         this.lastName = lastName;
         this.firstName = firstName;
@@ -154,10 +170,11 @@ public class Guest implements Comparable<Guest>{
     }
 
     public void setNumber(int newNumber) {
-        for (Guest g:Controller.guests) {
-            if (g.getGuestID().equals(""+newNumber)) return;
+        if (!numberUsed[newNumber]) {
+            if (this.number != -1) numberUsed[this.number] = false;
+            numberUsed[newNumber] = true;
+            number = newNumber;
         }
-        number = newNumber;
     }
 
 
@@ -299,8 +316,14 @@ public class Guest implements Comparable<Guest>{
         return null;
     }
 
+    public void remove() {
+        numberUsed[number] = false;
+    }
+
+
     public String toString() {
         if ((lastName == null || lastName.equals("")) && (firstName == null || firstName.equals(""))) return ""+number;
+        if ((lastName == null || lastName.equals(""))) return ""+number+" "+firstName;
         if (firstName == null || firstName.equals("")) return ""+number+" "+lastName;
         return ""+number+" "+lastName + ", " + firstName;
     }

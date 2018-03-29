@@ -7,10 +7,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 
 public class Controller {
@@ -186,15 +183,23 @@ public class Controller {
     @FXML
     public void newGuest() {
         Guest g = new Guest();
+        g.setFirstName("[New Guest]");
         guests.add(g);
+        FXCollections.sort(guests);
         guestSelect.setItems(guests);
+        guestSelect.setValue(g);
+        updateGuestTextField(g);
     }
 
     @FXML
     public void newItem() {
         Item i = new Item();
+        i.setName("[New Item]");
         items.add(i);
+        FXCollections.sort(items);
         itemSelect.setItems(items);
+        itemSelect.setValue(i);
+        updateItemTextField(i);
     }
 
     @FXML
@@ -208,7 +213,10 @@ public class Controller {
         if (g == null) return;
         removeGuestNum.clear();
         guests.remove(g);
-        if (selectedGuest == g) selectedGuest = null;
+        g.remove();
+        if (selectedGuest == g) {
+            selectedGuest = null;
+        }
             updateGuest();
             guestSelect.setItems(guests);
 
