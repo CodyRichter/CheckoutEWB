@@ -231,6 +231,7 @@ public class Controller {
         } catch (Exception ignored) {}
         if (i == null) return;
         items.remove(i);
+        i.remove();
         removeItemNum.clear();
         if (selectedItem == i) selectedItem = null;
         updateItem();

@@ -3,9 +3,10 @@ package sample;
 public class Item implements Comparable<Item>{
 
     private static int totalItems = 0; //Total Number Of Guests Attending
+    private static boolean[] numberUsed = new boolean[10000]; //Support for up to 10,000 people
 
     //ID Number:
-    private int number;
+    private int number = -1;
 
     //Information
     private String name = null;
@@ -16,15 +17,24 @@ public class Item implements Comparable<Item>{
 
 
     public Item() {
-        //Set Up Current Guest Number
-        number = totalItems;
-        totalItems++;
+        for (int i = 0; i < numberUsed.length; i++) {
+            if (!numberUsed[i]) {
+                number = i;
+                numberUsed[i] = true;
+                break;
+            }
+        }
     }
 
     public Item(boolean fromFile) {
         if(true)return;
-        number = totalItems;
-        totalItems++;
+        for (int i = 0; i < numberUsed.length; i++) {
+            if (!numberUsed[i]) {
+                number = i;
+                numberUsed[i] = true;
+                break;
+            }
+        }
     }
 
     public Item(String name, int price) {
@@ -49,11 +59,12 @@ public class Item implements Comparable<Item>{
         this.notes = notes;
     }
 
-    public void setNumber(int number) {
-        for (Item i : Controller.items) {
-            if (i.getNumber()==number) return;
+    public void setNumber(int newNumber) {
+        if (!numberUsed[newNumber]) {
+            if (this.number != -1) numberUsed[this.number] = false;
+            numberUsed[newNumber] = true;
+            number = newNumber;
         }
-        this.number = number;
     }
 
     public String getName() {
@@ -72,6 +83,10 @@ public class Item implements Comparable<Item>{
 
     public double getPrice() {
         return price;
+    }
+
+    public void remove() {
+        numberUsed[number] = false;
     }
 
     public int getNumber() {return number;}

@@ -3,7 +3,7 @@ package sample;
 import java.util.ArrayList;
 
 public class Guest implements Comparable<Guest>{
-    private static int totalGuests = 0; //Total Number Of Guests Attending
+    //Class wide, number-selection variables
     private static boolean[] numberUsed = new boolean[10000]; //Support for up to 10,000 people
 
     //ID Number:

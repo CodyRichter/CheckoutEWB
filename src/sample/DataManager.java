@@ -1,4 +1,6 @@
 package sample;
+import javafx.collections.FXCollections;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -71,7 +73,7 @@ public class DataManager {
 
                 Controller.guests.add(g);
 
-                if (lineArray[15].equals("-")) continue;
+                if (lineArray[15].equals("-") || (lineArray[15].equals(""))) continue;
 
                 Item i = new Item(true);
 
@@ -100,6 +102,8 @@ public class DataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        FXCollections.sort(Controller.items);
+        FXCollections.sort(Controller.guests);
     }
 
     public static void saveData(){
