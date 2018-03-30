@@ -308,7 +308,7 @@ public class Controller {
             i.setPrice(d);
         } catch (Exception ignored) {}
 
-        setItemNumber();
+        setItemNumber(); //Do this last
 
     }
 
