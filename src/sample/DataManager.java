@@ -18,13 +18,13 @@ public class DataManager {
 
         String csvFile = filePath;
         String line;
-        String cvsSplitBy = ",";
+        String csvSplitBy = ",";
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             boolean firstThrough = false;
             while ((line = br.readLine()) != null) {
                 if (!firstThrough) {firstThrough = true; continue;}
-                String[] lineArray = line.split(cvsSplitBy);
+                String[] lineArray = line.split(csvSplitBy);
                 if (lineArray.length == 0 || lineArray.length == 1) break;
                 Guest g = new Guest(true);
                 try {
