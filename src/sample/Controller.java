@@ -463,8 +463,21 @@ public class Controller {
             double d = Double.parseDouble(guestDonation.getText());
             selectedGuest.setDonation(d);
         } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(amountPaid.getText());
+            selectedGuest.setAmountPaid(d);
+        } catch (Exception ignored) {}
+
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText(""+selectedGuest.checkout());
+
+        if(selectedGuest.getAmountPaid() < selectedGuest.checkout()) {
+            paymentNeeded.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+            paymentNeeded.setTextFill(Color.RED);
+            paymentNeeded.setText("*Payment Required*");
+        } else paymentNeeded.setText("");
+
     }
 
     @FXML
@@ -473,7 +486,6 @@ public class Controller {
         selectedItem.setOwner(null);
         itemOwner.clear();
     }
-
 
     private void updateGuestItems(Guest g) {
         StringBuilder owned = new StringBuilder();
