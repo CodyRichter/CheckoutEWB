@@ -54,7 +54,7 @@
         </ToolBar>
     </top>
    <center>
-        <SplitPane dividerPositions="0.42355889724310775" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.23558897243107768" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="269.0">
                     <children>
@@ -87,8 +87,8 @@
                         <TextField fx:id="glasses" layoutX="199.0" layoutY="196.0" onInputMethodTextChanged="#updatePrice" onKeyPressed="#updatePrice" onKeyReleased="#updatePrice" onKeyTyped="#updatePrice" prefHeight="25.0" prefWidth="37.0" />
                         <TextField fx:id="guestDonation" layoutX="309.0" layoutY="196.0" onInputMethodTextChanged="#updatePrice" onKeyPressed="#updatePrice" onKeyReleased="#updatePrice" onKeyTyped="#updatePrice" onMouseEntered="#updatePrice" onMouseExited="#updatePrice" prefHeight="25.0" prefWidth="37.0" />
                   <CheckBox fx:id="auctionPaidByCheck" layoutX="12.0" layoutY="360.0" mnemonicParsing="false" text="Paid By Check" />
-                  <TextField fx:id="amountPaid" layoutX="246.0" layoutY="333.0" onInputMethodTextChanged="#updatePrice" onKeyPressed="#updatePrice" onKeyReleased="#updatePrice" onKeyTyped="#updatePrice" prefHeight="31.0" prefWidth="60.0" />
-                  <TextField fx:id="changeGiven" layoutX="246.0" layoutY="363.0" onInputMethodTextChanged="#getChangeNeeded" onKeyPressed="#getChangeNeeded" onKeyReleased="#getChangeNeeded" onKeyTyped="#getChangeNeeded" prefHeight="31.0" prefWidth="60.0" />
+                  <TextField fx:id="amountPaid" layoutX="246.0" layoutY="333.0" onInputMethodTextChanged="#updatePrice" onKeyPressed="#updatePrice" onKeyReleased="#updatePrice" onKeyTyped="#updatePrice" prefHeight="25.0" prefWidth="60.0" />
+                  <TextField fx:id="changeGiven" layoutX="246.0" layoutY="363.0" onInputMethodTextChanged="#getChangeNeeded" onKeyPressed="#getChangeNeeded" onKeyReleased="#getChangeNeeded" onKeyTyped="#getChangeNeeded" prefHeight="25.0" prefWidth="60.0" />
                   <CheckBox fx:id="orderComplete" layoutX="335.0" layoutY="330.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Order Complete" />
                         <Button layoutX="328.0" layoutY="356.0" mnemonicParsing="false" onAction="#updateGuest" text="Update Guest Profile" />
                         <Label layoutX="13.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="First Name:" />
@@ -112,7 +112,7 @@
                   <TextField fx:id="guestNumber" layoutX="265.0" layoutY="10.0" prefHeight="25.0" prefWidth="51.0" />
                   <Label layoutX="252.0" layoutY="14.0" prefHeight="17.0" prefWidth="14.0" text="#:" />
                   <Label fx:id="paymentNeeded" alignment="CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="309.0" prefHeight="21.0" prefWidth="207.0" />
-                  <Label fx:id="changeNeeded" alignment="CENTER" contentDisplay="CENTER" layoutX="328.0" layoutY="280.0" prefHeight="21.0" prefWidth="207.0" />
+                  <Label fx:id="changeNeeded" alignment="CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="291.0" prefHeight="21.0" prefWidth="207.0" />
                     </children>
                 </AnchorPane>
             </items>

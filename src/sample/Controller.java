@@ -497,11 +497,11 @@ public class Controller {
 
         if(selectedGuest.getAmountPaid()-selectedGuest.checkout()-selectedGuest.getChangeGiven() != 0) {
             double value = selectedGuest.getAmountPaid()-selectedGuest.checkout()-selectedGuest.getChangeGiven();
-            if (value < 0) {
+            if (selectedGuest.getAmountPaid() > selectedGuest.checkout() && value < 0) {
                 changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
                 changeNeeded.setTextFill(Color.DARKRED);
                 changeNeeded.setText("*ERROR IN PAYMENT*");
-            } else {
+            } else if (selectedGuest.getAmountPaid() > selectedGuest.checkout()){
                 changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
                 changeNeeded.setTextFill(Color.GREEN);
                 changeNeeded.setText("*Change Needed: $" + value + "*");
