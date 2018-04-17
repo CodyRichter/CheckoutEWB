@@ -109,6 +109,9 @@ public class Controller {
     Label paymentNeeded;
 
     @FXML
+    Label changeNeeded;
+
+    @FXML
     TextField tShirt;
 
     @FXML
@@ -433,11 +436,8 @@ public class Controller {
         updateGuestItems(g);
         totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         totalDue.setText(""+g.checkout());
-        if(g.getAmountPaid() < g.checkout()) {
-            paymentNeeded.setFont(Font.font("Verdana", FontWeight.BOLD,12));
-            paymentNeeded.setTextFill(Color.RED);
-            paymentNeeded.setText("*Payment Required*");
-        } else paymentNeeded.setText("");
+        updatePrice();
+        getChangeNeeded();
     }
 
     @FXML
@@ -478,7 +478,38 @@ public class Controller {
             paymentNeeded.setText("*Payment Required*");
         } else paymentNeeded.setText("");
 
+        getChangeNeeded();
+
     }
+
+    @FXML
+    public void getChangeNeeded() {
+        if (selectedGuest == null) return;
+        try {
+            double d = Double.parseDouble(amountPaid.getText());
+            selectedGuest.setAmountPaid(d);
+        } catch (Exception ignored) {}
+
+        try {
+            double d = Double.parseDouble(changeGiven.getText());
+            selectedGuest.setChangeGiven(d);
+        } catch (Exception ignored) {}
+
+        if(selectedGuest.getAmountPaid()-selectedGuest.checkout()-selectedGuest.getChangeGiven() != 0) {
+            double value = selectedGuest.getAmountPaid()-selectedGuest.checkout()-selectedGuest.getChangeGiven();
+            if (value < 0) {
+                changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+                changeNeeded.setTextFill(Color.DARKRED);
+                changeNeeded.setText("*ERROR IN PAYMENT*");
+            } else {
+                changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+                changeNeeded.setTextFill(Color.GREEN);
+                changeNeeded.setText("*Change Needed: $" + value + "*");
+            }
+        } else changeNeeded.setText("");
+
+    }
+
 
     @FXML
     public void removeItemOwner() {
