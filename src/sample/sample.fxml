@@ -87,8 +87,8 @@
                         <TextField fx:id="glasses" layoutX="199.0" layoutY="196.0" onInputMethodTextChanged="#updatePrice" onKeyPressed="#updatePrice" onKeyReleased="#updatePrice" onKeyTyped="#updatePrice" prefHeight="25.0" prefWidth="37.0" />
                         <TextField fx:id="guestDonation" layoutX="309.0" layoutY="196.0" onInputMethodTextChanged="#updatePrice" onKeyPressed="#updatePrice" onKeyReleased="#updatePrice" onKeyTyped="#updatePrice" onMouseEntered="#updatePrice" onMouseExited="#updatePrice" prefHeight="25.0" prefWidth="37.0" />
                   <CheckBox fx:id="auctionPaidByCheck" layoutX="12.0" layoutY="360.0" mnemonicParsing="false" text="Paid By Check" />
-                  <TextField fx:id="amountPaid" layoutX="246.0" layoutY="333.0" prefHeight="25.0" prefWidth="37.0" />
-                  <TextField fx:id="changeGiven" layoutX="246.0" layoutY="363.0" prefHeight="25.0" prefWidth="37.0" />
+                  <TextField fx:id="amountPaid" layoutX="246.0" layoutY="333.0" prefHeight="31.0" prefWidth="60.0" />
+                  <TextField fx:id="changeGiven" layoutX="246.0" layoutY="363.0" prefHeight="31.0" prefWidth="60.0" />
                   <CheckBox fx:id="orderComplete" layoutX="335.0" layoutY="330.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Order Complete" />
                         <Button layoutX="328.0" layoutY="356.0" mnemonicParsing="false" onAction="#updateGuest" text="Update Guest Profile" />
                         <Label layoutX="13.0" layoutY="45.0" prefHeight="17.0" prefWidth="73.0" text="First Name:" />
