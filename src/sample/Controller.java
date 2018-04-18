@@ -31,124 +31,49 @@ public class Controller {
     //
 
     @FXML
-    MenuItem saveData;
+    MenuItem saveData, loadData, saveAndExit, documentation;
 
     @FXML
-    MenuItem loadData;
+    Button addItem, removeItem, addGuest, removeGuest;
 
     @FXML
-    MenuItem documentation;
-
-    @FXML
-    MenuItem saveAndExit;
-
-    @FXML
-    Button addItem;
-
-    @FXML
-    TextField removeItemNum;
-
-    @FXML
-    TextField removeGuestNum;
-
-    @FXML
-    Button addGuest;
-
-    @FXML
-    Button removeGuest;
-
-    @FXML
-    Button removeItem;
-
+    TextField removeItemNum, removeGuestNum;
 
     //
     // Items
     //
 
     @FXML
-    TextField itemName;
-
-    @FXML
-    TextField itemPrice;
-
-    @FXML
-    ComboBox<Item> itemSelect;
+    TextField itemName, itemPrice, itemNumber, itemOwner;
 
     @FXML
     TextArea itemNotes;
 
     @FXML
-    TextField itemNumber;
-
-    @FXML
-    TextField itemOwner;
+    ComboBox<Item> itemSelect;
 
     @FXML
     ComboBox<Guest> ownerSelect;
 
     //
-    // Guests
+    // Guest Form Variables
     //
 
     @FXML
-    TextField lastName;
+    TextField lastName, phoneNumber, firstName, email, guestNumber, tShirt, glasses, guestDonation, changeGiven, entryDonation, amountPaid;
 
     @FXML
-    TextField phoneNumber;
+    Label paymentNeeded, changeNeeded, totalDue;
 
     @FXML
-    TextField firstName;
-
-    @FXML
-    TextField email;
-
-    @FXML
-    TextField guestNumber;
-
-    @FXML
-    Label paymentNeeded;
-
-    @FXML
-    Label changeNeeded;
-
-    @FXML
-    TextField tShirt;
-
-    @FXML
-    TextField glasses;
-
-    @FXML
-    Label totalDue;
-
-    @FXML
-    TextField guestDonation;
-
-    @FXML
-    TextArea guestItemList;
+    TextArea guestItemList, guestNotes;
 
     @FXML
     ComboBox<Guest> guestSelect;
 
     @FXML
-    TextField changeGiven;
+    CheckBox auctionPaidByCheck, entryPaidByCheck, orderComplete;
 
-    @FXML
-    TextField entryDonation;
-
-    @FXML
-    TextArea guestNotes;
-
-    @FXML
-    TextField amountPaid;
-
-    @FXML
-    CheckBox orderComplete;
-
-    @FXML
-    CheckBox auctionPaidByCheck;
-
-    @FXML
-    CheckBox entryPaidByCheck;
 
     @FXML
     public void saveData() {
@@ -257,27 +182,6 @@ public class Controller {
         updateGuestTextField(selectedGuest);
     }
 
-    private void clearGuestData() {
-        lastName.setText("");
-        firstName.setText("");
-        phoneNumber.setText("");
-        email.setText("");
-        tShirt.setText("");
-        glasses.setText("");
-        guestDonation.setText("");
-        changeGiven.setText("");
-        entryDonation.setText("");
-        guestNotes.setText("");
-        amountPaid.setText("");
-        orderComplete.setSelected(false);
-        auctionPaidByCheck.setSelected(false);
-        entryPaidByCheck.setSelected(false);
-        guestItemList.setText("");
-        guestNumber.setText("");
-        paymentNeeded.setText("");
-        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
-        totalDue.setText("");
-    }
 
     private void clearItemData() {
         itemName.setText("");
@@ -304,6 +208,8 @@ public class Controller {
             int ownerNumber = Integer.parseInt(itemOwner.getText());
             Guest g = Guest.getGuestFromID(""+ownerNumber);
             i.setOwner(g);
+            if (g != null)
+                g.getItems().add(i);
         } catch (Exception ignored) {}
 
         try {
@@ -334,20 +240,6 @@ public class Controller {
     }
 
     @FXML
-    public void setGuestNumber() {
-        if (selectedGuest == null) return;
-        int i = -1;
-        try {
-            i = Integer.parseInt(guestNumber.getText());
-        } catch (Exception ignored) {}
-        if (i < 0) return;
-        selectedGuest.setNumber(i);
-        FXCollections.sort(guests);
-        guestSelect.setItems(guests);
-        if (selectedItem != null && selectedItem.getOwner() == selectedGuest) itemOwner.setText(""+selectedItem.getOwner().getNumber());
-    }
-
-    @FXML
     public void setItemNumber() {
         if (selectedItem == null) return;
         int i = -1;
@@ -360,7 +252,29 @@ public class Controller {
         itemSelect.setItems(items);
     }
 
+    private void updateGuestItems(Guest g) {
+        //TODO: Find a way to make this method more efficient
 
+        StringBuilder owned = new StringBuilder();
+        g.getItems().clear();
+        for (Item i : items) {
+            if (i.getOwner() == g) {
+            owned.append("[$").append(i.getPrice()).append("]  #[").append(i.getNumber()).append("]    ").append(i.getName()).append("\n");
+            g.getItems().add(i);
+            }
+        }
+        guestItemList.setText(owned.toString());
+    }
+
+    //
+    // -----------------------------
+    // Guest Updates
+    // -----------------------------
+    //
+
+    /**
+     * Controls For Selecting Guest From Drop-Down Guest Selection List
+     */
     @FXML
     public void selectGuestFromList() {
         Guest g = guestSelect.getValue();
@@ -368,6 +282,10 @@ public class Controller {
         updateGuestTextField(g);
     }
 
+    /**
+     * Saves Current Data In The Forms To The Desired Guest's Object
+     * @param g Guest To Have Form Data Stored To
+     */
     @FXML
     private void saveCurrentGuestData(Guest g) {
         //Direct String Inputs
@@ -415,6 +333,10 @@ public class Controller {
         setGuestNumber();//Do This Last
     }
 
+    /**
+     * Will Set All Of The Selected Text In The Forms To The Info Of The Selected Guest
+     * @param g Guest That Will Have Form Info Populated By
+     */
     @FXML
     private void updateGuestTextField(Guest g) {
         if (g == null) {clearGuestData(); return;}
@@ -440,6 +362,85 @@ public class Controller {
         getChangeNeeded();
     }
 
+
+
+    /**
+     * Sets Guest's Number Value In The "Guest Number" Form.
+     * Does Some Other Updates To Make Sure Everything Works Out
+     */
+    @FXML
+    private void setGuestNumber() {
+        if (selectedGuest == null) return;
+        int i = -1;
+        try {
+            i = Integer.parseInt(guestNumber.getText());
+        } catch (Exception ignored) {}
+        if (i < 0) return;
+        selectedGuest.setNumber(i);
+        FXCollections.sort(guests);
+        guestSelect.setItems(guests);
+        if (selectedItem != null && selectedItem.getOwner() == selectedGuest) itemOwner.setText(""+selectedItem.getOwner().getNumber());
+    }
+
+    /**
+     * Removes The Current Guest Data From The Form And Sets It To Blank
+     */
+    private void clearGuestData() {
+        lastName.setText("");
+        firstName.setText("");
+        phoneNumber.setText("");
+        email.setText("");
+        tShirt.setText("");
+        glasses.setText("");
+        guestDonation.setText("");
+        changeGiven.setText("");
+        entryDonation.setText("");
+        guestNotes.setText("");
+        amountPaid.setText("");
+        orderComplete.setSelected(false);
+        auctionPaidByCheck.setSelected(false);
+        entryPaidByCheck.setSelected(false);
+        guestItemList.setText("");
+        guestNumber.setText("");
+        paymentNeeded.setText("");
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+        totalDue.setText("");
+        changeNeeded.setText("");
+    }
+
+
+    //
+    // -----------------------------
+    // Item Updates
+    // -----------------------------
+    //
+
+
+
+
+
+    /**
+     * Called from the "Remove Item Owner" Button On The Interface
+     * Will Remove All Ownership Of This Item.
+     */
+    @FXML
+    public void removeItemOwner() {
+        if(selectedItem==null) return;
+        selectedItem.setOwner(null);
+        selectedGuest.getItems().remove(selectedItem);
+        itemOwner.clear();
+    }
+
+    //
+    // -----------------------------
+    // Dynamic Label Updates
+    // -----------------------------
+    //
+
+    /**
+     * Will Update The "Total Due" category and the "Payment Required" Labels
+     * Dynamically Updates As Inputs Are Put Into The Forms
+     */
     @FXML
     public void updatePrice() {
         if (selectedGuest==null) return;
@@ -482,8 +483,13 @@ public class Controller {
 
     }
 
+    /**
+     * Will Update The "Change Needed" Label Dynamically
+     * Has Minor Error Checking Built In To Prevent Errors In Making Change
+     * Dynamically Updates As Inputs Are Put Into Forms
+     */
     @FXML
-    public void getChangeNeeded() {
+    private void getChangeNeeded() {
         if (selectedGuest == null) return;
         try {
             double d = Double.parseDouble(amountPaid.getText());
@@ -511,27 +517,4 @@ public class Controller {
         } else changeNeeded.setText("");
 
     }
-
-
-    @FXML
-    public void removeItemOwner() {
-        if(selectedItem==null) return;
-        selectedItem.setOwner(null);
-        itemOwner.clear();
-    }
-
-    private void updateGuestItems(Guest g) {
-        StringBuilder owned = new StringBuilder();
-        g.getItems().clear();
-        for (Item i : items) {
-            if (i.getOwner() == g) {
-            owned.append("[$").append(i.getPrice()).append("]  #[").append(i.getNumber()).append("]    ").append(i.getName()).append("\n");
-            g.getItems().add(i);
-            }
-        }
-        guestItemList.setText(owned.toString());
-    }
-
-
-
 }

@@ -260,6 +260,8 @@ public class Guest implements Comparable<Guest> {
     }
 
     public ArrayList<Item> getItems() {
+        if (items == null)
+            items = new ArrayList<Item>();
         return items;
     }
 
