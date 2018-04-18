@@ -495,17 +495,19 @@ public class Controller {
             selectedGuest.setChangeGiven(d);
         } catch (Exception ignored) {}
 
-        if(selectedGuest.getAmountPaid()-selectedGuest.checkout()-selectedGuest.getChangeGiven() != 0) {
-            double value = selectedGuest.getAmountPaid()-selectedGuest.checkout()-selectedGuest.getChangeGiven();
-            if (selectedGuest.getAmountPaid() > selectedGuest.checkout() && value < 0) {
+        double checkout = selectedGuest.checkout();
+        double amountChange = selectedGuest.getAmountPaid()-checkout-selectedGuest.getChangeGiven();
+        if(checkout > 0) {
+            if ((selectedGuest.getAmountPaid() <= checkout && selectedGuest.getChangeGiven() > 0) || (amountChange < 0 && selectedGuest.getAmountPaid() >= checkout)) {
                 changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
                 changeNeeded.setTextFill(Color.DARKRED);
                 changeNeeded.setText("*ERROR IN PAYMENT*");
-            } else if (selectedGuest.getAmountPaid() > selectedGuest.checkout()){
+
+            } else if (amountChange > 0) {
                 changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
                 changeNeeded.setTextFill(Color.GREEN);
-                changeNeeded.setText("*Change Needed: $" + value + "*");
-            }
+                changeNeeded.setText("*Change Needed: $" + amountChange + "*");
+            } else changeNeeded.setText("");
         } else changeNeeded.setText("");
 
     }
