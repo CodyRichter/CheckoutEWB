@@ -24,10 +24,10 @@ public class Controller {
     public Controller() {
     }
 
-
-
     //
-    // Menu Bar
+    // -----------------------------
+    // Menu Bar Variables
+    // -----------------------------
     //
 
     @FXML
@@ -40,7 +40,9 @@ public class Controller {
     TextField removeItemNum, removeGuestNum;
 
     //
-    // Items
+    // -----------------------------
+    // Item Variables
+    // -----------------------------
     //
 
     @FXML
@@ -56,7 +58,9 @@ public class Controller {
     ComboBox<Guest> ownerSelect;
 
     //
-    // Guest Form Variables
+    // -----------------------------
+    // Guest Variables
+    // -----------------------------
     //
 
     @FXML
@@ -80,15 +84,14 @@ public class Controller {
         DataManager.saveData();
     }
 
+    //
+    // -----------------------------
+    // Data Management
+    // -----------------------------
+    //
+
     @FXML
     public void loadData() {
-        DataManager.loadData();
-        /*for(Item i : itemToAddOwnerTo)
-        {
-            Guest g = Guest.getGuestFromID(""+ownerToAdd.remove());
-            if (g == null) continue;
-            i.setOwner(g);
-        }*/
 
         for (Item i:items) {
             if (ownerSetup.containsKey(i)) {
@@ -116,16 +119,11 @@ public class Controller {
         System.exit(0);
     }
 
-    @FXML
-    public void newGuest() {
-        Guest g = new Guest();
-        g.setFirstName("[New Guest]");
-        guests.add(g);
-        FXCollections.sort(guests);
-        guestSelect.setItems(guests);
-        guestSelect.setValue(g);
-        updateGuestTextField(g);
-    }
+    //
+    // -----------------------------
+    // Item Updates
+    // -----------------------------
+    //
 
     @FXML
     public void newItem() {
@@ -136,26 +134,6 @@ public class Controller {
         itemSelect.setItems(items);
         itemSelect.setValue(i);
         updateItemTextField(i);
-    }
-
-    @FXML
-    public void removeGuest() {
-        if (removeGuestNum.getText() == null) return;
-        Guest g = null;
-        try {
-            int guestNumber = Integer.parseInt(removeGuestNum.getText());
-            g = Guest.getGuestFromID(""+guestNumber);
-        } catch (Exception ignored) {}
-        if (g == null) return;
-        removeGuestNum.clear();
-        guests.remove(g);
-        g.remove();
-        if (selectedGuest == g) {
-            selectedGuest = null;
-        }
-            updateGuest();
-            guestSelect.setItems(guests);
-
     }
 
     public void removeItem() {
@@ -173,15 +151,6 @@ public class Controller {
         updateItem();
         itemSelect.setItems(items);
     }
-
-    @FXML
-    public void updateGuest() {
-        if (selectedGuest == null) {clearGuestData(); return;}
-        saveCurrentGuestData(selectedGuest);
-        guestSelect.setItems(guests);
-        updateGuestTextField(selectedGuest);
-    }
-
 
     private void clearItemData() {
         itemName.setText("");
@@ -240,7 +209,7 @@ public class Controller {
     }
 
     @FXML
-    public void setItemNumber() {
+    private void setItemNumber() {
         if (selectedItem == null) return;
         int i = -1;
         try {
@@ -252,25 +221,60 @@ public class Controller {
         itemSelect.setItems(items);
     }
 
-    private void updateGuestItems(Guest g) {
-        //TODO: Find a way to make this method more efficient
-
-        StringBuilder owned = new StringBuilder();
-        g.getItems().clear();
-        for (Item i : items) {
-            if (i.getOwner() == g) {
-            owned.append("[$").append(i.getPrice()).append("]  #[").append(i.getNumber()).append("]    ").append(i.getName()).append("\n");
-            g.getItems().add(i);
-            }
-        }
-        guestItemList.setText(owned.toString());
-    }
-
     //
     // -----------------------------
     // Guest Updates
     // -----------------------------
     //
+
+    /**
+     * Adds A New Guest To The List
+     */
+    @FXML
+    public void newGuest() {
+        Guest g = new Guest();
+        g.setFirstName("[New Guest]");
+        guests.add(g);
+        FXCollections.sort(guests);
+        guestSelect.setItems(guests);
+        guestSelect.setValue(g);
+        updateGuestTextField(g);
+    }
+
+    /**
+     * Removes A Guest From The List
+     */
+    @FXML
+    public void removeGuest() {
+        if (removeGuestNum.getText() == null) return;
+        Guest g = null;
+        try {
+            int guestNumber = Integer.parseInt(removeGuestNum.getText());
+            g = Guest.getGuestFromID(""+guestNumber);
+        } catch (Exception ignored) {}
+        if (g == null) return;
+        removeGuestNum.clear();
+        guests.remove(g);
+        g.remove();
+        if (selectedGuest == g) {
+            selectedGuest = null;
+        }
+        updateGuest();
+        guestSelect.setItems(guests);
+
+    }
+
+
+    /**
+     * Updates all guest data on button press, saves and sets values in form to actual data
+     */
+    @FXML
+    public void updateGuest() {
+        if (selectedGuest == null) {clearGuestData(); return;}
+        saveCurrentGuestData(selectedGuest);
+        guestSelect.setItems(guests);
+        updateGuestTextField(selectedGuest);
+    }
 
     /**
      * Controls For Selecting Guest From Drop-Down Guest Selection List
@@ -517,4 +521,28 @@ public class Controller {
         } else changeNeeded.setText("");
 
     }
+
+
+    //
+    // Misc.
+    //
+
+    /**
+     * Updates The Item List Of A Guest Object
+     * @param g Guest To Add Items To
+     */
+    private void updateGuestItems(Guest g) {
+        //TODO: Find a way to make this method more efficient
+
+        StringBuilder owned = new StringBuilder();
+        g.getItems().clear();
+        for (Item i : items) {
+            if (i.getOwner() == g) {
+                owned.append("[$").append(i.getPrice()).append("]  #[").append(i.getNumber()).append("]    ").append(i.getName()).append("\n");
+                g.getItems().add(i);
+            }
+        }
+        guestItemList.setText(owned.toString());
+    }
+
 }
