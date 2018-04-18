@@ -177,8 +177,9 @@ public class Controller {
             int ownerNumber = Integer.parseInt(itemOwner.getText());
             Guest g = Guest.getGuestFromID(""+ownerNumber);
             i.setOwner(g);
-            if (g != null)
-                g.getItems().add(i);
+            if (g != null && g == selectedGuest)
+                updateGuest();
+
         } catch (Exception ignored) {}
 
         try {
