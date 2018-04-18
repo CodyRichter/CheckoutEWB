@@ -2,7 +2,7 @@ package sample;
 
 import java.util.ArrayList;
 
-public class Guest implements Comparable<Guest>{
+public class Guest implements Comparable<Guest> {
     //Class wide, number-selection variables
     private static boolean[] numberUsed = new boolean[10000]; //Support for up to 10,000 people
 
@@ -161,6 +161,7 @@ public class Guest implements Comparable<Guest>{
 
     /**
      * Sets amount of money guest has paid for auction items
+     *
      * @param amountPaid Amount guest has paid
      */
     public void setAmountPaid(double amountPaid) {
@@ -180,18 +181,19 @@ public class Guest implements Comparable<Guest>{
     }
 
 
-
     /**
      * Sets notes about specific guest
      *
      * @param notes Additional notes to make
      */
     public void setNotes(String notes) {
-        this.notes = DataManager.clean(notes);;
+        this.notes = DataManager.clean(notes);
+        ;
     }
 
     /**
      * Sets how much change is given back to this guest
+     *
      * @param changeGiven Amount
      */
     public void setChangeGiven(double changeGiven) {
@@ -200,6 +202,7 @@ public class Guest implements Comparable<Guest>{
 
     /**
      * Sets whether everything with this guest's order is complete
+     *
      * @param orderComplete Order completed
      */
     public void setOrderComplete(boolean orderComplete) {
@@ -217,22 +220,22 @@ public class Guest implements Comparable<Guest>{
     }
 
     public String getLastName() {
-        if (lastName==null) return "";
+        if (lastName == null) return "";
         return lastName;
     }
 
     public String getFirstName() {
-        if (firstName==null) return "";
+        if (firstName == null) return "";
         return firstName;
     }
 
     public String getPhoneNumber() {
-        if (phoneNumber==null) return "";
+        if (phoneNumber == null) return "";
         return phoneNumber;
     }
 
     public String getEmail() {
-        if (email==null) return "";
+        if (email == null) return "";
         return email;
     }
 
@@ -269,7 +272,7 @@ public class Guest implements Comparable<Guest>{
     }
 
     public String getNotes() {
-        if (notes==null) return "";
+        if (notes == null) return "";
         return notes;
     }
 
@@ -288,30 +291,28 @@ public class Guest implements Comparable<Guest>{
      */
     public double checkout() {
         double sum = 0;
-        for (int i = 0; i < numberShirts; i++) {
-            sum += 10;
-        }
+        sum += (numberShirts*10); //Do Calculation For Shirts
+        sum += (numberCups / 2) * 12; //Do Calculation With 2-For-12
+        if (numberCups % 2 != 0) sum += 7; //Do Calculation With 1-For-7
 
+        if (!items.isEmpty()) //Only Check Items List If It Isn't Empty
+            for (Item i : items) {
+                sum += i.getPrice();
+            }
 
-            sum += (numberCups/2)*12;
-            if (numberCups%2 != 0) sum +=7;
+        sum += entryDonation; //Entry Donation
+        sum += donation; //Additional Donation
 
-        for (Item i : items) {
-            sum += i.getPrice();
-        }
-
-        sum += donation;
-        sum += entryDonation;
         return sum;
     }
 
     public String getGuestID() {
-        return ""+number;
+        return "" + number;
     }
 
     public static Guest getGuestFromID(String ID) {
-        for(Guest g:Controller.guests) {
-            if(g.getGuestID().equals(ID)) {
+        for (Guest g : Controller.guests) {
+            if (g.getGuestID().equals(ID)) {
                 return g;
             }
         }
@@ -324,10 +325,11 @@ public class Guest implements Comparable<Guest>{
 
 
     public String toString() {
-        if ((lastName == null || lastName.equals("")) && (firstName == null || firstName.equals(""))) return ""+number;
-        if ((lastName == null || lastName.equals(""))) return ""+number+" "+firstName;
-        if (firstName == null || firstName.equals("")) return ""+number+" "+lastName;
-        return ""+number+" "+lastName + ", " + firstName;
+        if ((lastName == null || lastName.equals("")) && (firstName == null || firstName.equals("")))
+            return "" + number;
+        if ((lastName == null || lastName.equals(""))) return "" + number + " " + firstName;
+        if (firstName == null || firstName.equals("")) return "" + number + " " + lastName;
+        return "" + number + " " + lastName + ", " + firstName;
     }
 
     public int compareTo(Guest g) {
