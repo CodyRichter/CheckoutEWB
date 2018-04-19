@@ -1,4 +1,5 @@
 package sample;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ public class Controller {
     public static ObservableList<Guest> guests = FXCollections.observableArrayList();
     public static ObservableList<Item> items = FXCollections.observableArrayList();
 
-    public static HashMap<Item,Integer> ownerSetup = new HashMap<>();
+    public static HashMap<Item, Integer> ownerSetup = new HashMap<>();
 
     private Guest selectedGuest;
     private Item selectedItem;
@@ -92,26 +93,42 @@ public class Controller {
 
     @FXML
     public void loadData() {
+        //Removes Existing Data As To Not Conflict With Imported Data
+        removeAllData();
 
-        DataManager.loadData();
+        DataManager.loadData(); //Loads In Data From DataManager
 
-        for (Item i:items) {
+        for (Item i : items) { //Uses Hashmap To Map Items To Owners
             if (ownerSetup.containsKey(i)) {
-                Guest g = Guest.getGuestFromID(""+ownerSetup.get(i));
+                Guest g = Guest.getGuestFromID("" + ownerSetup.get(i));
                 if (g == null) continue;
                 i.setOwner(g);
                 ownerSetup.remove(i);
             }
         }
-
+        //Sets Drop Down Menu Items
         guestSelect.setItems(guests);
         itemSelect.setItems(items);
+        if (guests.size() > 0) guestSelect.setValue(guests.get(guests.size() - 1));
+        if (items.size() > 0) itemSelect.setValue(items.get(guests.size() - 1));
+
+        //Updates Text
         updateItem();
         updateGuest();
     }
 
+    private void removeAllData() {
+        guests.clear();
+        Guest.clearAllNumbers();
+        clearGuestData();
+        items.clear();
+        Item.clearAllNumbers();
+        clearItemData();
+    }
+
+
     @FXML
-    public void loadDocumentation() throws Exception{ //Loads Github Page with Documentation
+    public void loadDocumentation() throws Exception { //Loads Github Page with Documentation
         java.awt.Desktop.getDesktop().browse(new URI("https://github.com/Senarii/CheckoutEWB/blob/master/readme.md"));
     }
 
@@ -143,8 +160,9 @@ public class Controller {
         Item i = null;
         try {
             int itemNumber = Integer.parseInt(removeItemNum.getText());
-            i = Item.getItemFromID(""+itemNumber);
-        } catch (Exception ignored) {}
+            i = Item.getItemFromID("" + itemNumber);
+        } catch (Exception ignored) {
+        }
         if (i == null) return;
         items.remove(i);
         i.remove();
@@ -153,6 +171,17 @@ public class Controller {
         updateItem();
         itemSelect.setItems(items);
     }
+
+    public void removeItem(Item i) {
+        if (i == null) return;
+        items.remove(i);
+        i.remove();
+        removeItemNum.clear();
+        if (selectedItem == i) selectedItem = null;
+        updateItem();
+        itemSelect.setItems(items);
+    }
+
 
     private void clearItemData() {
         itemName.setText("");
@@ -164,7 +193,10 @@ public class Controller {
 
     @FXML
     public void updateItem() {
-        if (selectedItem==null) {clearItemData(); return;}
+        if (selectedItem == null) {
+            clearItemData();
+            return;
+        }
         saveCurrentItemData(selectedItem);
         itemSelect.setItems(items);
         updateItemTextField(selectedItem);
@@ -177,17 +209,19 @@ public class Controller {
 
         try {
             int ownerNumber = Integer.parseInt(itemOwner.getText());
-            Guest g = Guest.getGuestFromID(""+ownerNumber);
+            Guest g = Guest.getGuestFromID("" + ownerNumber);
             i.setOwner(g);
             if (g != null && g == selectedGuest)
                 updateGuest();
 
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(itemPrice.getText());
             i.setPrice(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         setItemNumber(); //Do this last
 
@@ -202,11 +236,14 @@ public class Controller {
 
     @FXML
     private void updateItemTextField(Item i) {
-        if (i == null) {clearItemData(); return;}
+        if (i == null) {
+            clearItemData();
+            return;
+        }
         itemName.setText(i.getName());
-        itemPrice.setText(""+i.getPrice());
-        itemNumber.setText(""+i.getNumber());
-        if (selectedItem.getOwner() != null) itemOwner.setText(""+i.getOwner().getNumber());
+        itemPrice.setText("" + i.getPrice());
+        itemNumber.setText("" + i.getNumber());
+        if (selectedItem.getOwner() != null) itemOwner.setText("" + i.getOwner().getNumber());
         else itemOwner.setText("");
         itemNotes.setText(i.getNotes());
     }
@@ -217,7 +254,8 @@ public class Controller {
         int i = -1;
         try {
             i = Integer.parseInt(itemNumber.getText());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         if (i < 0) return;
         selectedItem.setNumber(i);
         FXCollections.sort(items);
@@ -253,10 +291,23 @@ public class Controller {
         Guest g = null;
         try {
             int guestNumber = Integer.parseInt(removeGuestNum.getText());
-            g = Guest.getGuestFromID(""+guestNumber);
-        } catch (Exception ignored) {}
+            g = Guest.getGuestFromID("" + guestNumber);
+        } catch (Exception ignored) {
+        }
         if (g == null) return;
         removeGuestNum.clear();
+        guests.remove(g);
+        g.remove();
+        if (selectedGuest == g) {
+            selectedGuest = null;
+        }
+        updateGuest();
+        guestSelect.setItems(guests);
+
+    }
+
+    public void removeGuest(Guest g) {
+        if (g == null) return;
         guests.remove(g);
         g.remove();
         if (selectedGuest == g) {
@@ -273,7 +324,10 @@ public class Controller {
      */
     @FXML
     public void updateGuest() {
-        if (selectedGuest == null) {clearGuestData(); return;}
+        if (selectedGuest == null) {
+            clearGuestData();
+            return;
+        }
         saveCurrentGuestData(selectedGuest);
         guestSelect.setItems(guests);
         updateGuestTextField(selectedGuest);
@@ -291,6 +345,7 @@ public class Controller {
 
     /**
      * Saves Current Data In The Forms To The Desired Guest's Object
+     *
      * @param g Guest To Have Form Data Stored To
      */
     @FXML
@@ -306,32 +361,38 @@ public class Controller {
         try {
             int i = Integer.parseInt(tShirt.getText());
             g.setNumberShirts(i);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             int i = Integer.parseInt(glasses.getText());
             g.setNumberCups(i);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(guestDonation.getText());
             g.setDonation(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(changeGiven.getText());
             g.setChangeGiven(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(entryDonation.getText());
             g.setEntryDonation(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(amountPaid.getText());
             g.setAmountPaid(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         //Boolean Inputs
         g.setOrderComplete(orderComplete.isSelected());
@@ -342,33 +403,36 @@ public class Controller {
 
     /**
      * Will Set All Of The Selected Text In The Forms To The Info Of The Selected Guest
+     *
      * @param g Guest That Will Have Form Info Populated By
      */
     @FXML
     private void updateGuestTextField(Guest g) {
-        if (g == null) {clearGuestData(); return;}
+        if (g == null) {
+            clearGuestData();
+            return;
+        }
         lastName.setText(g.getLastName());
         firstName.setText(g.getFirstName());
         phoneNumber.setText(g.getPhoneNumber());
         email.setText(g.getEmail());
-        tShirt.setText(""+g.getNumberShirts());
-        glasses.setText(""+g.getNumberCups());
-        guestDonation.setText(""+g.getDonation());
-        changeGiven.setText(""+g.getChangeGiven());
-        entryDonation.setText(""+g.getEntryDonation());
+        tShirt.setText("" + g.getNumberShirts());
+        glasses.setText("" + g.getNumberCups());
+        guestDonation.setText("" + g.getDonation());
+        changeGiven.setText("" + g.getChangeGiven());
+        entryDonation.setText("" + g.getEntryDonation());
         guestNotes.setText(g.getNotes());
-        amountPaid.setText(""+g.getAmountPaid());
+        amountPaid.setText("" + g.getAmountPaid());
         orderComplete.setSelected(g.getOrderComplete());
         auctionPaidByCheck.setSelected(!g.getPaidAuctionItemsCash());
         entryPaidByCheck.setSelected(!g.getPaidEntryDonationCash());
-        guestNumber.setText(""+g.getNumber());
+        guestNumber.setText("" + g.getNumber());
         updateGuestItems(g);
-        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
-        totalDue.setText(""+g.checkout());
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        totalDue.setText("" + g.checkout());
         updatePrice();
         getChangeNeeded();
     }
-
 
 
     /**
@@ -381,12 +445,14 @@ public class Controller {
         int i = -1;
         try {
             i = Integer.parseInt(guestNumber.getText());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         if (i < 0) return;
         selectedGuest.setNumber(i);
         FXCollections.sort(guests);
         guestSelect.setItems(guests);
-        if (selectedItem != null && selectedItem.getOwner() == selectedGuest) itemOwner.setText(""+selectedItem.getOwner().getNumber());
+        if (selectedItem != null && selectedItem.getOwner() == selectedGuest)
+            itemOwner.setText("" + selectedItem.getOwner().getNumber());
     }
 
     /**
@@ -410,7 +476,7 @@ public class Controller {
         guestItemList.setText("");
         guestNumber.setText("");
         paymentNeeded.setText("");
-        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         totalDue.setText("");
         changeNeeded.setText("");
     }
@@ -423,16 +489,13 @@ public class Controller {
     //
 
 
-
-
-
     /**
      * Called from the "Remove Item Owner" Button On The Interface
      * Will Remove All Ownership Of This Item.
      */
     @FXML
     public void removeItemOwner() {
-        if(selectedItem==null) return;
+        if (selectedItem == null) return;
         selectedItem.setOwner(null);
         selectedGuest.getItems().remove(selectedItem);
         itemOwner.clear();
@@ -450,38 +513,43 @@ public class Controller {
      */
     @FXML
     public void updatePrice() {
-        if (selectedGuest==null) return;
+        if (selectedGuest == null) return;
 
         try {
             int i = Integer.parseInt(entryDonation.getText());
             selectedGuest.setEntryDonation(i);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             int i = Integer.parseInt(tShirt.getText());
             selectedGuest.setNumberShirts(i);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             int i = Integer.parseInt(glasses.getText());
             selectedGuest.setNumberCups(i);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(guestDonation.getText());
             selectedGuest.setDonation(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(amountPaid.getText());
             selectedGuest.setAmountPaid(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
-        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD,12));
-        totalDue.setText(""+selectedGuest.checkout());
+        totalDue.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        totalDue.setText("" + selectedGuest.checkout());
 
-        if(selectedGuest.getAmountPaid() < selectedGuest.checkout()) {
-            paymentNeeded.setFont(Font.font("Verdana", FontWeight.BOLD,12));
+        if (selectedGuest.getAmountPaid() < selectedGuest.checkout()) {
+            paymentNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
             paymentNeeded.setTextFill(Color.RED);
             paymentNeeded.setText("*Payment Required*");
         } else paymentNeeded.setText("");
@@ -501,16 +569,18 @@ public class Controller {
         try {
             double d = Double.parseDouble(amountPaid.getText());
             selectedGuest.setAmountPaid(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         try {
             double d = Double.parseDouble(changeGiven.getText());
             selectedGuest.setChangeGiven(d);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         double checkout = selectedGuest.checkout();
-        double amountChange = selectedGuest.getAmountPaid()-checkout-selectedGuest.getChangeGiven();
-        if(checkout > 0) {
+        double amountChange = selectedGuest.getAmountPaid() - checkout - selectedGuest.getChangeGiven();
+        if (checkout > 0) {
             if ((selectedGuest.getAmountPaid() <= checkout && selectedGuest.getChangeGiven() > 0) || (amountChange < 0 && selectedGuest.getAmountPaid() >= checkout)) {
                 changeNeeded.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
                 changeNeeded.setTextFill(Color.DARKRED);
@@ -532,6 +602,7 @@ public class Controller {
 
     /**
      * Updates The Item List Of A Guest Object
+     *
      * @param g Guest To Add Items To
      */
     private void updateGuestItems(Guest g) {

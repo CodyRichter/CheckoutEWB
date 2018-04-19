@@ -340,4 +340,8 @@ public class Guest implements Comparable<Guest> {
         return 0;
     }
 
+    public static void clearAllNumbers() {
+        numberUsed = new boolean[10000];
+    }
+
 }

@@ -108,4 +108,8 @@ public class Item implements Comparable<Item>{
         return 0;
     }
 
+    public static void clearAllNumbers() {
+        numberUsed = new boolean[10000];
+    }
+
 }
