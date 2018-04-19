@@ -93,6 +93,8 @@ public class Controller {
     @FXML
     public void loadData() {
 
+        DataManager.loadData();
+
         for (Item i:items) {
             if (ownerSetup.containsKey(i)) {
                 Guest g = Guest.getGuestFromID(""+ownerSetup.get(i));
