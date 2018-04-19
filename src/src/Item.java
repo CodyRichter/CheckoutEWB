@@ -1,4 +1,4 @@
-package sample;
+package src;
 
 public class Item implements Comparable<Item>{
 
