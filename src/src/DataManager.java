@@ -212,6 +212,11 @@ public class DataManager {
         return f;
     }
 
+    public static boolean fileExists() {
+        File f = new File(filePath);
+        return f.exists();
+    }
+
     public static String clean(String input) {
         String result = input.replace('\n',' ');
         result = result.replace('\r',' ');

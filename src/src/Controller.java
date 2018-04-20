@@ -1,12 +1,19 @@
 package src;
 
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URI;
 import java.util.*;
@@ -35,7 +42,7 @@ public class Controller {
     MenuItem saveData, loadData, saveAndExit, documentation;
 
     @FXML
-    Button addItem, removeItem, addGuest, removeGuest;
+    Button addItem, removeItem, addGuest, removeGuest, continueLoadingData, cancelLoadingData;
 
     @FXML
     TextField removeItemNum, removeGuestNum;
@@ -82,7 +89,17 @@ public class Controller {
 
     @FXML
     public void saveData() {
-        DataManager.saveData();
+        if (DataManager.fileExists()) {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setTitle("Overwrite Save");
+            a.setContentText("There is currently a data.csv file in this directory. If you continue, the previous contents of the file will be overwritten.\nSave Anyways?");
+            a.showAndWait();
+
+            if (a.getResult() == ButtonType.OK) {
+                DataManager.saveData();
+            }
+        } else
+            DataManager.saveData();
     }
 
     //
@@ -90,6 +107,27 @@ public class Controller {
     // Data Management
     // -----------------------------
     //
+
+    @FXML
+    public void warnAboutData() {
+        if (guests.isEmpty() && items.isEmpty()) {loadData(); return;}
+
+        //Will Show This If There Is Already Data In The Form
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("Continue Loading Data");
+        a.setContentText("If you continue to load data from a file, the information that you have entered up to this point will be lost.\nContinue?");
+        a.showAndWait();
+
+        if (a.getResult() == ButtonType.OK) {
+            loadData();
+        }
+
+    }
+
+    @FXML
+    public void stopLoadingData() {
+
+    }
 
     @FXML
     public void loadData() {
