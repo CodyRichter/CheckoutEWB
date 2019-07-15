@@ -1,3 +1,6 @@
+# UPDATE:
+### CheckoutEWB has been recoded and moved to https://github.com/Senarii/CheckoutEWB2. This version of CheckoutEWB is no longer being updated/maintained
+
 # Overview
 CheckoutEWB is a system designed for the EWB UMass chapter to better keep track of details during the yearly auction, and to improve efficiency of the checkout process.
 
